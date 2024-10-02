@@ -1,9 +1,9 @@
 import { hilog } from '@kit.PerformanceAnalysisKit'
 //二次封装hilog
-const Tag_Name: string = "Interview_pass"
+const Tag_Name: string = "logTip"
 
 class Logger {
-  private domain: number
+  private domain: number //域名
   private tag: string
 
   constructor(tag: string = 'Logger', domain: number = 0x0000) {
@@ -14,7 +14,7 @@ class Logger {
   format(args: string[]) {
     let str =''
     for (let i = 0; i < args.length; i++) {
-      str += '${public} '
+      str += `${args}`
     }
     return str
   }
