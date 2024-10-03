@@ -13,7 +13,7 @@ export struct CalendarComp {
     //获取 月 日
     this.month = dateObj.getMonth()
     this.date = dateObj.getDate()
-    //下个月-这个月的时间戳  今年的    下个月 getMonth是0开头（0-11）0+2 - (这个月的(0+1)) 才是正确时间戳
+    //下个月-这个月的时间戳  今年的    下个月 getMonth是0开头（0-11）(下个月+2) - (这个月的+1))
     const nextTemp =
       new Date(dateObj.getFullYear() + '-' + (dateObj.getMonth() + 2) + '-' + dateObj.getDate()).getTime()
     const currentTemp =
