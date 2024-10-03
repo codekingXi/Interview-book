@@ -1,4 +1,4 @@
-import { Tab, fullScreen, TabItems } from 'basic'
+import { Tab, fullScreen, TabItems, ImgComp } from 'basic'
 import { HomePage } from './HomePage'
 import { InterviewPage } from './InterviewPage'
 import { MinePage } from './MinePage'
@@ -16,15 +16,15 @@ struct Index {
   @Builder
   TabBar(item: Tab, index: number) {
     Column({ space: 5 }) {
-      Image(this.activeIndex === index ? item.activeIcon : item.icon)
-        .width(24)
-        .aspectRatio(1)
+      ImgComp({
+        imgSrc:this.activeIndex === index ? item.activeIcon : item.icon,
+        imgWidth:24
+      })
       Text(item.name)
         .fontSize(12)
         .fontColor(this.activeIndex === index ? $r('app.color.black') : $r('app.color.common_gray_01'))
     }
   }
-
   build() {
     Column() {
       Tabs({ barPosition: BarPosition.End }) {
