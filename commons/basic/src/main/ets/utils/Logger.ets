@@ -1,6 +1,7 @@
 import { hilog } from '@kit.PerformanceAnalysisKit'
+
 //二次封装hilog
-const Tag_Name: string = "logTip"
+const Tag_Name: string = "LogSystem"
 
 class Logger {
   private domain: number //域名
@@ -12,7 +13,7 @@ class Logger {
   }
 
   format(args: string[]) {
-    let str =''
+    let str = ''
     for (let i = 0; i < args.length; i++) {
       str += `${args}`
     }
@@ -39,4 +40,5 @@ class Logger {
     hilog.fatal(this.domain, this.tag, this.format(args), args)
   }
 }
+
 export const logger = new Logger(Tag_Name)
