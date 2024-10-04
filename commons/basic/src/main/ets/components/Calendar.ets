@@ -2,11 +2,11 @@ import { QuestionDay } from "./Questionday"
 
 @ComponentV2
 export struct CalendarComp {
-  monthArr: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-  @Local month: number = 0 //月份 0-11
-  @Local date: number = 1 //号数 1--31
-  @Local day: number = 30 //默认30天
-  @Local offsetDay: number = 0 //偏移天数
+  @Provider() monthArr: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+  @Provider() month: number = 0 //月份 0-11
+  @Provider() date: number = 1 //号数 1--31
+  @Provider() day: number = 30 //默认30天
+  @Provider() offsetDay: number = 0 //偏移天数
 
   aboutToAppear(): void {
     const dateObj = new Date() //直接定义日期对象 后续方便实现复杂功能
@@ -27,36 +27,11 @@ export struct CalendarComp {
   build() {
     Row() {
       //文字日历
-      CalendarSonBox({
-        monthArr: this.monthArr,
-        month: this.month,
-        date: this.date
-      })
+      CalendarTextBox()
       //每日推荐文字
       QuestionDay()
-
       //日期
-      Column() {
-        GridRow({ columns: 7, gutter: 6 }) {
-          //美化日期UI的结构 空圆点
-          ForEach(Array(this.offsetDay === 0 ? 6 : this.offsetDay).fill(() => 1), () => {
-            GridCol()
-          })
-          //当前日期 实色圆点
-          ForEach(Array(this.day).fill(() => 1), (item: object, index: number) => {
-            GridCol() {
-              Row()
-                .width(6)
-                .aspectRatio(1)
-                .borderRadius(3)
-                .backgroundColor(this.date === (index + 1) ? Color.Green : '#ff989898')
-            }
-          })
-        }
-        .padding({ right: 5 })
-      }.width(120)
-      .height('100%')
-      .justifyContent(FlexAlign.Center)
+      DateComp()
     }
     .width('100%')
     .height(80)
@@ -66,16 +41,41 @@ export struct CalendarComp {
 }
 
 @ComponentV2
-export struct CalendarSonBox {
-  @Require
-  @Param
-  monthArr: string[] = []
-  @Require
-  @Param
-  month: number = 0
-  @Require
-  @Param
-  date: number = 1
+struct DateComp {
+  @Consumer() offsetDay: number = 0
+  @Consumer() date: number = 0
+  @Consumer() day: number = 0
+
+  build() {
+    Column() {
+      GridRow({ columns: 7, gutter: 6 }) {
+        //美化日期UI的结构 空圆点
+        ForEach(Array(this.offsetDay === 0 ? 6 : this.offsetDay).fill(() => 1), () => {
+          GridCol()
+        })
+        //当前日期 实色圆点
+        ForEach(Array(this.day).fill(() => 1), (item: object, index: number) => {
+          GridCol() {
+            Row()
+              .width(6)
+              .aspectRatio(1)
+              .borderRadius(3)
+              .backgroundColor(this.date === (index + 1) ? Color.Green : '#ff989898')
+          }
+        })
+      }
+      .padding({ right: 5 })
+    }.width(120)
+    .height('100%')
+    .justifyContent(FlexAlign.Center)
+  }
+}
+
+@ComponentV2
+export struct CalendarTextBox {
+  @Consumer() monthArr: string[] = []
+  @Consumer() month: number = 0
+  @Consumer() date: number = 0
 
   build() {
     Column({ space: 6 }) {
