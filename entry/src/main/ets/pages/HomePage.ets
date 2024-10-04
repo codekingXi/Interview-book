@@ -2,7 +2,7 @@ import { Banner, bannerArr, CalendarComp, ClocKIn, DataSource, ImgComp, SearchNa
 
 @ComponentV2
 export struct HomePage {
-  @Builder
+  @LocalBuilder
   scan() {
     ImgComp({
       imgSrc: $r('app.media.ic_home_scan'),
@@ -10,7 +10,7 @@ export struct HomePage {
     })
   }
 
-  @Builder
+  @LocalBuilder
   Clock() {
     ClocKIn({ clockCount: 1 })
       .onClick(() => {
