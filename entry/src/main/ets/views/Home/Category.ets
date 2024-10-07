@@ -17,6 +17,8 @@ export struct Category {
   @Local
   showDialog: boolean = false
   tabController: TabsController = new TabsController()
+  /**
+   * 是否显示骨架屏*/
   @Local
   loading: boolean = false
 
