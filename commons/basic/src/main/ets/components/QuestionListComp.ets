@@ -6,6 +6,7 @@ import {
   QuestionListParams,
   SortType
 } from "../../../../Index"
+import { promptAction } from "@kit.ArkUI"
 
 @ComponentV2
 export struct QuestionListComp {
@@ -15,6 +16,10 @@ export struct QuestionListComp {
   isLoading: boolean = false //是否在加载
   @Local
   isFinished: boolean = false //是否加载完成
+  @Param
+  activeIndex: number = 0
+  @Param
+  index: number = 0
   @Local
   list: QuestionItemModel[] = []
   //获取列表数据的参数
@@ -24,6 +29,13 @@ export struct QuestionListComp {
   typeId: number
   @Local
   page: number = 1
+
+  @Monitor('sort')
+  onChangeSort() {
+    if (this.activeIndex === this.index) {
+      this.isRefreshing = true
+    }
+  }
 
   //下拉刷新数据
   async onRefresh() {
@@ -37,6 +49,7 @@ export struct QuestionListComp {
       this.isFinished = false
       //让下一页数据加载同步
       this.page++
+      promptAction.showToast({ message: '更新成功' })
     }
   }
 
