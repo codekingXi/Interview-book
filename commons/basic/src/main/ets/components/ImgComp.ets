@@ -19,7 +19,7 @@ export struct ImgComp {
   @Param
   isFillColor: boolean = false //是否填充颜色
   @Param
-  fillColor:ResourceColor = ''
+  fillColor: ResourceColor = ''
   @Param
   isDraggable: boolean = false //图片是否可拖拽
   @Param
@@ -35,9 +35,13 @@ export struct ImgComp {
   @Param
   shadowValue: number | Resource = 0 //阴影值
   @Param
-  shadowColor: string | Color | Resource | undefined = '' //阴影颜色
+  shadowColor: string | Color | Resource = '' //阴影颜色
   @Param
-  aspectRatioValue: number = 0  //宽高比
+  aspectRatioValue: number = 0 //宽高比
+  @Param
+  marginLeft:number=0
+  @Param
+  marginRight:number=0
   build() {
     Image(this.imgSrc)
       .draggable(this.isDraggable)
@@ -45,7 +49,7 @@ export struct ImgComp {
       .height(this.imgHeight || null)
       .aspectRatio(this.aspectRatioValue)
       .objectFit(this.ImageFitType)
-      .fillColor(this.isFillColor ? this.color_1 : this.color_2||this.fillColor)
+      .fillColor(this.isFillColor ? this.color_1 : this.color_2 || this.fillColor)
       .border({
         width: this.bordWidth,
         color: this.bordColor,
@@ -55,5 +59,6 @@ export struct ImgComp {
         radius: this.shadowValue,
         color: this.shadowColor
       })
+      .margin({ left: this.marginLeft, right: this.marginRight })
   }
 }
