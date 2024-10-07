@@ -1,19 +1,28 @@
-import { ImgComp, QuestionListComp, QuestionType, httpClass } from "basic"
+import { ImgComp, QuestionListComp, QuestionType, httpClass, SortType } from "basic"
 
 @ComponentV2
 export struct Category {
   @Local
   activeIndex: number = 0
+  @Local
+  sortType: SortType = SortType.Default
+  @Local
+  filterIndex: number = 0
+  @Local
+  filterSort: SortType = SortType.Default
   /**
    * 导航列表数据*/
   @Local
-  questionList: QuestionType[] | null = null
+  questionList: QuestionType[] | object[] = []
+  @Local
+  showDialog: boolean = false
+  tabController: TabsController = new TabsController()
 
   //自定义tab结构
   @LocalBuilder
   tabBar(item: QuestionType, index: number) {
     Row() {
-      Column() {
+      Column({ space: 2 }) {
         //文字
         Text(item.name)
           .height(40)
@@ -37,6 +46,7 @@ export struct Category {
         })
       }
     }.padding({ left: 8, right: 8 })
+    .margin({ right: item.name === '性能优化' ? 22 : 0 })
   }
 
   async getQuestionList() {
@@ -50,21 +60,213 @@ export struct Category {
     this.getQuestionList()
   }
 
-  build() {
-    Tabs({ barPosition: BarPosition.Start }) {
-      ForEach(this.questionList, (item: QuestionType, index: number) => {
-        TabContent() {
-          QuestionListComp({
-            typeId:item.id
+  @LocalBuilder
+  fillterDialog() {
+    Column() {
+      Row() {
+        Text('重置')
+          .fontSize(16)
+          .fontWeight(500)
+          .fontColor($r('app.color.common_gray_03'))
+          .onClick(() => {
+            this.sortType = SortType.Default
+            this.filterIndex = 0
           })
-            .layoutWeight(1)
-        }.tabBar(this.tabBar(item, index))
+        Text('筛选题目')
+          .layoutWeight(1)
+          .fontSize(18)
+          .fontWeight(500)
+          .fontColor($r('app.color.black'))
+          .textAlign(TextAlign.Center)
+        Text('完成')
+          .fontWeight(500)
+          .fontSize(16)
+          .fontColor($r('app.color.common_main_color'))
+          .onClick(() => {
+            this.showDialog = false
+            this.activeIndex = this.filterIndex
+            this.tabController.changeIndex(this.activeIndex)
+            this.sortType = this.filterSort
+          })
+      }
+      .margin({ bottom: 4, top: 4 })
+
+      Text('题目排序')
+        .textTitle()
+      // TODO 筛选按钮
+      Flex() {
+        //默认
+        fillterBtn({
+          isSelected: this.filterSort === SortType.Default,
+          Sort: this.filterSort
+        })
+          .onClick(() => {
+            this.filterSort = SortType.Default
+          })
+        //浏览量
+        fillterBtn({
+          text: '浏览量',
+          isSort: true,
+          isSelected: this.filterSort === SortType.ViewLow || this.filterSort === SortType.ViewHigh,
+          Sort: this.filterSort
+        })
+          .onClick(() => {
+            if (this.filterSort === SortType.ViewLow) {
+              this.filterSort = SortType.ViewHigh
+            } else {
+              this.filterSort = SortType.ViewLow
+            }
+          })
+        //难度
+        fillterBtn({
+          text: '难度',
+          isSort: true,
+          isSelected: this.filterSort === SortType.DifficultyLow || this.filterSort === SortType.DifficultyHigh,
+          Sort: this.filterSort
+        }).onClick(() => {
+          if (this.filterSort === SortType.DifficultyLow) {
+            this.filterSort = SortType.DifficultyHigh
+          } else {
+            this.filterSort = SortType.DifficultyLow
+          }
+        })
+        //推荐
+        fillterBtn({
+          text: '推荐',
+          isSelected: this.filterSort === SortType.Commend,
+          Sort: this.filterSort
+        })
+          .onClick(() => {
+            this.filterSort = SortType.Commend
+          })
+      }
+
+      Text('选择分类')
+        .textTitle()
+      // TODO 筛选按钮
+      Flex({ wrap: FlexWrap.Wrap }) {
+        ForEach(this.questionList, (item: QuestionType, i: number) => {
+          fillterBtn({
+            text: item.name,
+            isNew: item.displayNewestFlag === 1,
+            isSelected: this.filterIndex === i  //相等为true
+          })
+            .onClick(() => {
+              this.filterIndex = i //切换
+            })
+        })
+      }
+    }
+    .padding(16)
+    .backgroundColor($r('app.color.white'))
+    .height('100%')
+  }
+
+  build() {
+    Stack({ alignContent: Alignment.TopEnd }) {
+      Tabs({ barPosition: BarPosition.Start, controller: this.tabController }) {
+        ForEach(this.questionList, (item: QuestionType, index: number) => {
+          TabContent() {
+            QuestionListComp({
+              typeId: item.id,
+              sort: this.sortType,
+              activeIndex: this.activeIndex,
+              index: index
+            })
+              .layoutWeight(1)
+          }.tabBar(this.tabBar(item, index))
+        })
+      }
+      .barHeight(44)
+      .barMode(BarMode.Scrollable)
+      .divider({ strokeWidth: .5, color: $r('app.color.common_gray_border') })
+      .onChange((i: number) => {
+        this.activeIndex = i
+      })
+
+      //右侧筛选按钮
+      Row() {
+        ImgComp({
+          imgSrc: $r('app.media.ic_home_filter'),
+          imgWidth: 24,
+          aspectRatioValue: 1
+        })
+      }
+      .width(40)
+      .aspectRatio(1)
+      .justifyContent(FlexAlign.Center)
+      .margin({ right: -10 })
+      .linearGradient({ angle: 90, colors: [['#00ffffff', 0], ['#ffffffff', 0.285]] })
+      .bindSheet($$this.showDialog, this.fillterDialog(), {
+        showClose: false,
+        height: 400
+      })
+      .onClick(() => {
+        this.showDialog = true
       })
     }
-    .onTabBarClick((i) => {
-      this.activeIndex = i
-    })
-    .barMode(BarMode.Scrollable)
-    .scrollable(false)
+  }
+}
+
+@Extend(Text)
+function textTitle() {
+  .fontSize(14)
+  .fontWeight(500)
+  .fontColor($r('app.color.black'))
+  .width('100%')
+  .margin({ top: 20 })
+}
+
+@ComponentV2
+struct fillterBtn {
+  @Once @Param
+  text: string = '默认'
+  @Param
+  isSort: boolean = false
+  @Once @Param
+  isNew: boolean = false
+  @Param
+  isSelected: boolean = false
+  @Param
+  Sort: SortType = SortType.Default
+
+  build() {
+    Row() {
+      Text(this.text)//文本
+        .fontSize(12)
+        .fontColor(this.isSelected ? $r('app.color.common_main_color') : $r('app.color.black'))
+      if (this.isNew) { //new 图标
+        ImgComp({
+          imgSrc: $r('app.media.ic_home_new'),
+          imgWidth: 32,
+          imgHeight: 14
+        })
+          .position({ right: -26, top: -7 })
+      }
+      if (this.isSort) { //排序
+        Column() {
+          ImgComp({
+            imgSrc: $r('sys.media.ohos_ic_public_arrow_up'),
+            imgWidth: 12,
+            imgHeight: 6,
+            fillColor: this.isSelected && this.Sort % 2 === 0 ? $r('app.color.common_main_color') :
+            $r('app.color.black')
+          })
+          ImgComp({
+            imgSrc: $r('sys.media.ohos_ic_public_arrow_down'),
+            imgWidth: 12,
+            imgHeight: 6,
+            fillColor: this.isSelected && this.Sort % 2 === 1 ? $r('app.color.common_main_color') :
+            $r('app.color.black')
+          })
+        }
+        .margin({ top: -0.5, left: 2 })
+      }
+    }
+    .height(30)
+    .padding({ left: 10, right: 10 })
+    .backgroundColor($r('app.color.common_gray_bg'))
+    .borderRadius(4)
+    .margin({ top: 12, right: this.isNew ? 26 : 10 })
   }
 }
