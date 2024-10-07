@@ -13,3 +13,7 @@ export * from './TagComp'
 export * from './QuestionItemComp'
 
 export * from './QuestionListComp'
+
+export * from './Skeleton'
+
+export * from './SkeletonItem'
