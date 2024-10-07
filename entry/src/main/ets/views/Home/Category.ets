@@ -1,4 +1,4 @@
-import { ImgComp, QuestionListComp, QuestionType, httpClass, SortType } from "basic"
+import { ImgComp, QuestionListComp, QuestionType, httpClass, SortType, Skeleton, SkeletonItem } from "basic"
 
 @ComponentV2
 export struct Category {
@@ -17,6 +17,8 @@ export struct Category {
   @Local
   showDialog: boolean = false
   tabController: TabsController = new TabsController()
+  @Local
+  loading: boolean = false
 
   //自定义tab结构
   @LocalBuilder
@@ -50,10 +52,12 @@ export struct Category {
   }
 
   async getQuestionList() {
+    this.loading = true
     const res = await httpClass.request<QuestionType[]>({
       url: 'hm/question/type'
     })
     this.questionList = res
+    this.loading = false
   }
 
   aboutToAppear() {
@@ -162,49 +166,84 @@ export struct Category {
     .height('100%')
   }
 
-  build() {
-    Stack({ alignContent: Alignment.TopEnd }) {
-      Tabs({ barPosition: BarPosition.Start, controller: this.tabController }) {
-        ForEach(this.questionList, (item: QuestionType, index: number) => {
-          TabContent() {
-            QuestionListComp({
-              typeId: item.id,
-              sort: this.sortType,
-              activeIndex: this.activeIndex,
-              index: index
-            })
-              .layoutWeight(1)
-          }.tabBar(this.tabBar(item, index))
-        })
-      }
-      .barHeight(44)
-      .barMode(BarMode.Scrollable)
-      .divider({ strokeWidth: .5, color: $r('app.color.common_gray_border') })
-      .onChange((i: number) => {
-        this.activeIndex = i
-      })
+  @LocalBuilder
+  SkeletonBuilder() {
+    Skeleton() {
+      Column() {
+        //骨架屏顶部内容
+        Row({ space: 8 }) {
+          SkeletonItem({ widthValue: 50 })
+          SkeletonItem({ widthValue: 90 })
+          SkeletonItem({ widthValue: 70 })
+          SkeletonItem({ widthValue: 80 })
+        }.height(44)
+        .width('100%')
+        .padding(10)
 
-      //右侧筛选按钮
-      Row() {
-        ImgComp({
-          imgSrc: $r('app.media.ic_home_filter'),
-          imgWidth: 24,
-          aspectRatioValue: 1
+        //骨架屏中心内容
+        ForEach(Array.from(Array(5)), () => {
+          Column({ space: 20 }) {
+            SkeletonItem({ widthValue: '85%' })
+            SkeletonItem({ widthValue: '50%' })
+          }
+          .height(80)
+          .width('100%')
+          .justifyContent(FlexAlign.Center)
+          .alignItems(HorizontalAlign.Start)
+          .padding(10)
         })
       }
-      .width(40)
-      .aspectRatio(1)
-      .justifyContent(FlexAlign.Center)
-      .margin({ right: -10 })
-      .linearGradient({ angle: 90, colors: [['#00ffffff', 0], ['#ffffffff', 0.285]] })
-      .bindSheet($$this.showDialog, this.fillterDialog(), {
-        showClose: false,
-        height: 400
-      })
-      .onClick(() => {
-        this.showDialog = true
-      })
     }
+  }
+
+  build() {
+    if (this.loading) {
+      this.SkeletonBuilder()
+    } else {
+      Stack({ alignContent: Alignment.TopEnd }) {
+        Tabs({ barPosition: BarPosition.Start, controller: this.tabController }) {
+          ForEach(this.questionList, (item: QuestionType, index: number) => {
+            TabContent() {
+              QuestionListComp({
+                typeId: item.id,
+                sort: this.sortType,
+                activeIndex: this.activeIndex,
+                index: index
+              })
+                .layoutWeight(1)
+            }.tabBar(this.tabBar(item, index))
+          })
+        }
+        .barHeight(44)
+        .barMode(BarMode.Scrollable)
+        .divider({ strokeWidth: .5, color: $r('app.color.common_gray_border') })
+        .onChange((i: number) => {
+          this.activeIndex = i
+        })
+
+        //右侧筛选按钮
+        Row() {
+          ImgComp({
+            imgSrc: $r('app.media.ic_home_filter'),
+            imgWidth: 24,
+            aspectRatioValue: 1
+          })
+        }
+        .width(40)
+        .aspectRatio(1)
+        .justifyContent(FlexAlign.Center)
+        .margin({ right: -10 })
+        .linearGradient({ angle: 90, colors: [['#00ffffff', 0], ['#ffffffff', 0.285]] })
+        .bindSheet($$this.showDialog, this.fillterDialog(), {
+          showClose: false,
+          height: 400
+        })
+        .onClick(() => {
+          this.showDialog = true
+        })
+      }
+    }
+
   }
 }
 
