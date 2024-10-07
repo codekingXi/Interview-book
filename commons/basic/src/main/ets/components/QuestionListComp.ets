@@ -1,0 +1,135 @@
+import {
+  httpClass,
+  QuestionItemComp,
+  PageData,
+  QuestionItemModel,
+  QuestionListParams,
+  SortType
+} from "../../../../Index"
+
+@ComponentV2
+export struct QuestionListComp {
+  @Local
+  isRefreshing: boolean = false //是否在下拉
+  @Local
+  isLoading: boolean = false //是否在加载
+  @Local
+  isFinished: boolean = false //是否加载完成
+  @Local
+  list: QuestionItemModel[] = []
+  //获取列表数据的参数
+  @Param
+  sort: SortType = SortType.Default
+  @Require @Param
+  typeId: number
+  @Local
+  page: number = 1
+
+  //下拉刷新数据
+  async onRefresh() {
+    this.page = 1
+    const res = await this.getQuestionListItem()
+    this.list = res.rows //直接覆盖
+    this.isRefreshing = false
+    if (this.page >= res.pageTotal) {
+      this.isFinished = true
+    } else {
+      this.isFinished = false
+      //让下一页数据加载同步
+      this.page++
+    }
+  }
+
+  //上拉加载内容
+  async onLoad() {
+    const res = await this.getQuestionListItem()
+    this.list.push(...res.rows)
+    this.isLoading = false
+    //是否最后一页
+    if (this.page >= res.pageTotal) {
+      this.isFinished = true
+    } else {
+      this.page++
+    }
+  }
+
+  //list底部内容
+  @LocalBuilder
+  loadMoreContent() {
+    if (this.isLoading) {
+      Row({ space: 4 }) {
+        LoadingProgress()
+          .width(20)
+        Text('正在努力加载中...')
+          .fontColor($r('app.color.common_gray_01'))
+      }
+      .width('100%')
+      .height(80)
+      .justifyContent(FlexAlign.Center)
+
+    } else if (this.isFinished) {
+      Text('我是有底线的~')
+        .width('100%')
+        .height(80)
+        .textAlign(TextAlign.Center)
+        .fontColor($r('app.color.common_gray_01'))
+    }
+  }
+
+  getQuestionListItem(): Promise<PageData<QuestionItemModel>> {
+    return httpClass.request({
+      url: 'hm/question/list',
+      params: {
+        type: this.typeId,
+        questionBankType: 10,
+        sort: this.sort,
+        page: this.page,
+        pageSize: 10
+      } as QuestionListParams
+    })
+  }
+
+  build() {
+    //下拉刷新
+    Refresh({ refreshing: $$this.isRefreshing }) {
+      //上拉加载
+      List() {
+        ForEach(this.list, (item: QuestionItemModel) => {
+          ListItem() {
+            QuestionItemComp({ item })
+          }
+        })
+        this.loadMoreContent()
+      }
+      .edgeEffect(EdgeEffect.None)
+      .scrollBar(BarState.Off)
+      .width('100%')
+      .height('100%')
+      .divider({
+        color: $r('app.color.common_gray_border'),
+        strokeWidth: .5,
+        startMargin: 16,
+        endMargin: 16
+      })
+      .onScrollStart(() => {
+        //开始滑动
+      })
+      .onReachEnd(() => {
+        //状态处于刷新 加载中 完成 都不能加载数据
+        if (this.isRefreshing || this.isLoading || this.isFinished) {
+          return
+        }
+        this.isLoading = true
+        //触底
+        this.onLoad()
+      })
+      .onScrollStop(() => {
+        //停止滑动
+      })
+
+    }
+    .onRefreshing(() => {
+      this.onRefresh()
+    })
+  }
+}
