@@ -1,4 +1,5 @@
 import { Banner, bannerArr, CalendarComp, ClocKIn, DataSource, ImgComp, SearchNav } from "basic"
+import { Category } from "../views/Home"
 
 @ComponentV2
 export struct HomePage {
@@ -45,10 +46,10 @@ export struct HomePage {
           })
         })
       }
+      .margin({ top: 10, bottom: 10 })
       .interval(2000)
       .autoPlay(true)
       .loop(true)
-      .margin({ top: 16, bottom: 16 })
       .indicator(DotIndicator.dot()
         .itemWidth(4)
         .bottom(4)
@@ -57,6 +58,13 @@ export struct HomePage {
 
       //日历
       CalendarComp()
+      //试题分类
+      Column() {
+        Category()
+      }
+      .width('100%')
+      .layoutWeight(1)
+      .backgroundColor($r('app.color.white'))
     }
     .margin({ left: 16, right: 16 })
     .height('100%')
