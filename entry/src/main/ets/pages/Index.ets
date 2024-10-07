@@ -13,7 +13,7 @@ struct Index {
 
   @Local activeIndex: number = 0 //索引
 
-  @Builder
+  @LocalBuilder
   TabBar(item: Tab, index: number) {
     Column({ space: 5 }) {
       ImgComp({
