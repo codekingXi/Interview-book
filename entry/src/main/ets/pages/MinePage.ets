@@ -5,9 +5,9 @@ import { ClocKIn, constants, Nav, statusBar, Tool, User } from 'basic'
 @Component
 export struct MinePage {
   @StorageProp(constants.TOP_AREA)
-  topHei: number = 0
+  topHeight: number = 0
   @StorageProp(constants.BOTTOM_AREA)
-  bottomHei: number = 0
+  bottomHeight: number = 0
   @StorageProp('User')
   User: User = {} as User
 
@@ -72,15 +72,15 @@ export struct MinePage {
   build() {
     Column({ space: 16 }) {
       Row({ space: 12 }) {
-        Image($r('app.media.ic_mine_avatar'))
-          .alt($r('app.media.ic_mine_avatar'))
+        Image(this.User.avatar || $r('app.media.ic_mine_avatar'))
+          .alt($r('app.media.ic_mine_avatar'))//加载时的占位图
           .width(55)
           .aspectRatio(1)
           .borderRadius(55)
         // 是否登录
         if (this.User.token) {
           Column({ space: 4 }) {
-            Text(this.User.avatar || this.User.nickName)
+            Text(this.User.username || this.User.nickName)
               .fontSize(18)
               .fontWeight(500)
               .maxLines(1)
@@ -113,7 +113,7 @@ export struct MinePage {
       }
       .width('100%')
       .height(100)
-      .margin({ top: this.topHei })
+      .margin({ top: this.topHeight })
 
       GridRow({ columns: 4 }) {
         this.navBuilder({
