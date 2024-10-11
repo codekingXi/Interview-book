@@ -1,10 +1,12 @@
-import { Banner, bannerArr, CalendarComp, ClocKIn, constants, DataSource, ImgComp, SearchNav } from "basic"
+import { Banner, bannerArr, CalendarComp, ClocKIn, constants, DataSource, ImgComp, SearchNav, User } from "basic"
 import { Category } from "../views/Home"
 
 @Component
 export struct HomePage {
   @StorageProp(constants.TOP_AREA)
   topHeight: number = 0
+  @StorageProp('User')
+  User: User = {} as User
 
   @Builder
   scan() {
@@ -16,7 +18,7 @@ export struct HomePage {
 
   @Builder
   Clock() {
-    ClocKIn({ clockCount: 1 })
+    ClocKIn({ clockCount: this.User.clockinNumbers || 0 })
       .onClick(() => {
 
       })
