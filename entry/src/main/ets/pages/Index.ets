@@ -1,15 +1,14 @@
-import { Tab, fullScreen, TabItems, ImgComp, constants, FullScreen } from 'basic'
+import { Tab, fullScreen, TabItems, ImgComp, constants } from 'basic'
 import { HomePage } from './HomePage'
 import { InterviewPage } from './InterviewPage'
 import { MinePage } from './MinePage'
 import { ProjectPage } from './ProjectPage'
-import { AppStorageV2 } from '@kit.ArkUI'
 
 @Entry
 @Component
 struct Index {
   @StorageProp(constants.BOTTOM_AREA)
-  bottomHei: number = 0
+  bottomHeight: number = 0
   @State activeIndex: number = 0 //索引
 
   @Builder
@@ -57,7 +56,7 @@ struct Index {
     .height('100%')
     .backgroundColor($r('app.color.white'))
     .padding({
-      bottom: this.bottomHei
+      bottom: this.bottomHeight
     })
   }
 }

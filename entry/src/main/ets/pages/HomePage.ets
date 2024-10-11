@@ -4,7 +4,7 @@ import { Category } from "../views/Home"
 @Component
 export struct HomePage {
   @StorageProp(constants.TOP_AREA)
-  topHei: number = 0
+  topHeight: number = 0
 
   @Builder
   scan() {
@@ -69,7 +69,7 @@ export struct HomePage {
       .layoutWeight(1)
       .backgroundColor($r('app.color.white'))
     }
-    .margin({ left: 16, top: this.topHei, right: 16 })
+    .margin({ left: 16, top: this.topHeight, right: 16 })
     .height('100%')
   }
 }
