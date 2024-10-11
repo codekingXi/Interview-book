@@ -8,3 +8,7 @@ export * from './Category'
 export * from './TagModel'
 
 export * from './QuestionItemModel'
+
+export * from './MineModel'
+
+export * from './Login'

@@ -1,12 +1,12 @@
 /**
  * 骨架屏内容*/
-@ComponentV2
+@Component
 export struct SkeletonItem {
-  @Param
+  @Prop
   widthValue: Length = 100
-  @Local
+  @State
   bgColor: ResourceColor = Color.Gray
-  @Local
+  @State
   opacityValue: number = 1
 
   build() {

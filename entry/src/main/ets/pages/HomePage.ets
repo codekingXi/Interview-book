@@ -1,9 +1,12 @@
-import { Banner, bannerArr, CalendarComp, ClocKIn, DataSource, ImgComp, SearchNav } from "basic"
+import { Banner, bannerArr, CalendarComp, ClocKIn, constants, DataSource, ImgComp, SearchNav } from "basic"
 import { Category } from "../views/Home"
 
-@ComponentV2
+@Component
 export struct HomePage {
-  @LocalBuilder
+  @StorageProp(constants.TOP_AREA)
+  topHei: number = 0
+
+  @Builder
   scan() {
     ImgComp({
       imgSrc: $r('app.media.ic_home_scan'),
@@ -11,7 +14,7 @@ export struct HomePage {
     })
   }
 
-  @LocalBuilder
+  @Builder
   Clock() {
     ClocKIn({ clockCount: 1 })
       .onClick(() => {
@@ -66,7 +69,7 @@ export struct HomePage {
       .layoutWeight(1)
       .backgroundColor($r('app.color.white'))
     }
-    .margin({ left: 16, right: 16 })
+    .margin({ left: 16, top: this.topHei, right: 16 })
     .height('100%')
   }
 }

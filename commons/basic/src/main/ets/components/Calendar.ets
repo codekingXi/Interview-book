@@ -1,12 +1,12 @@
 import { QuestionDay } from "./Questionday"
 
-@ComponentV2
+@Component
 export struct CalendarComp {
-  @Provider() monthArr: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-  @Provider() month: number = 0 //月份 0-11
-  @Provider() date: number = 1 //号数 1--31
-  @Provider() day: number = 30 //默认30天
-  @Provider() offsetDay: number = 0 //偏移天数
+  @Provide monthArr: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+  @Provide month: number = 0 //月份 0-11
+  @Provide date: number = 1 //号数 1--31
+  @Provide day: number = 30 //默认30天
+  @Provide offsetDay: number = 0 //偏移天数
 
   aboutToAppear(): void {
     const dateObj = new Date() //直接定义日期对象 后续方便实现复杂功能
@@ -40,11 +40,11 @@ export struct CalendarComp {
   }
 }
 
-@ComponentV2
+@Component
 struct DateComp {
-  @Consumer() offsetDay: number = 0
-  @Consumer() date: number = 0
-  @Consumer() day: number = 0
+  @Consume offsetDay: number
+  @Consume date: number
+  @Consume day: number
 
   build() {
     Column() {
@@ -71,11 +71,11 @@ struct DateComp {
   }
 }
 
-@ComponentV2
+@Component
 export struct CalendarTextBox {
-  @Consumer() monthArr: string[] = []
-  @Consumer() month: number = 0
-  @Consumer() date: number = 0
+  @Consume monthArr: string[]
+  @Consume month: number
+  @Consume date: number
 
   build() {
     Column({ space: 6 }) {

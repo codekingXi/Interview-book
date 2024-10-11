@@ -1,29 +1,29 @@
 import { ImgComp, QuestionListComp, QuestionType, httpClass, SortType, Skeleton, SkeletonItem } from "basic"
 
-@ComponentV2
+@Component
 export struct Category {
-  @Local
+  @State
   activeIndex: number = 0
-  @Local
+  @State
   sortType: SortType = SortType.Default
-  @Local
+  @State
   filterIndex: number = 0
-  @Local
+  @State
   filterSort: SortType = SortType.Default
   /**
    * 导航列表数据*/
-  @Local
+  @State
   questionList: QuestionType[] | object[] = []
-  @Local
+  @State
   showDialog: boolean = false
   tabController: TabsController = new TabsController()
   /**
    * 是否显示骨架屏*/
-  @Local
+  @State
   loading: boolean = false
 
   //自定义tab结构
-  @LocalBuilder
+  @Builder
   tabBar(item: QuestionType, index: number) {
     Row() {
       Column({ space: 2 }) {
@@ -66,7 +66,7 @@ export struct Category {
     this.getQuestionList()
   }
 
-  @LocalBuilder
+  @Builder
   fillterDialog() {
     Column() {
       Row() {
@@ -168,7 +168,7 @@ export struct Category {
     .height('100%')
   }
 
-  @LocalBuilder
+  @Builder
   SkeletonBuilder() {
     Skeleton() {
       Column() {
@@ -258,17 +258,17 @@ function textTitle() {
   .margin({ top: 20 })
 }
 
-@ComponentV2
+@Component
 struct fillterBtn {
-  @Once @Param
+  @Prop
   text: string = '默认'
-  @Param
+  @Prop
   isSort: boolean = false
-  @Once @Param
+  @Prop
   isNew: boolean = false
-  @Param
+  @Prop
   isSelected: boolean = false
-  @Param
+  @Prop
   Sort: SortType = SortType.Default
 
   build() {

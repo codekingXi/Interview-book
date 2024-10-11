@@ -1,4 +1,4 @@
-@ComponentV2
+@Component
 export struct ProjectPage {
   build() {
 

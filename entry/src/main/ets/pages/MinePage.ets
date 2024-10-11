@@ -1,9 +1,16 @@
-import { AppStorageV2, router } from '@kit.ArkUI'
-import { ClocKIn, constants, fullScreen, FullScreen, Nav, statusBar, Tool } from 'basic'
+import { router } from '@kit.ArkUI'
+import { ClocKIn, constants, Nav, statusBar, Tool, User } from 'basic'
 
 
-@ComponentV2
+@Component
 export struct MinePage {
+  @StorageProp(constants.TOP_AREA)
+  topHei: number = 0
+  @StorageProp(constants.BOTTOM_AREA)
+  bottomHei: number = 0
+  @StorageProp('User')
+  User: User = {} as User
+
   @Builder
   navBuilder(nav: Nav) {
     GridCol() {
@@ -71,9 +78,9 @@ export struct MinePage {
           .aspectRatio(1)
           .borderRadius(55)
         // 是否登录
-        if (false) {
+        if (this.User.token) {
           Column({ space: 4 }) {
-            Text('用户名')
+            Text(this.User.avatar || this.User.nickName)
               .fontSize(18)
               .fontWeight(500)
               .maxLines(1)
@@ -102,11 +109,11 @@ export struct MinePage {
             })
         }
 
-        ClocKIn()
+        ClocKIn({ clockCount: this.User.clockinNumbers || 0 })
       }
       .width('100%')
       .height(100)
-      .margin({ top: 40 })
+      .margin({ top: this.topHei })
 
       GridRow({ columns: 4 }) {
         this.navBuilder({

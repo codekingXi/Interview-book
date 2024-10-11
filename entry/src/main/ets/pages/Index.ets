@@ -1,33 +1,37 @@
-import { Tab, fullScreen, TabItems, ImgComp } from 'basic'
+import { Tab, fullScreen, TabItems, ImgComp, constants, FullScreen } from 'basic'
 import { HomePage } from './HomePage'
 import { InterviewPage } from './InterviewPage'
 import { MinePage } from './MinePage'
 import { ProjectPage } from './ProjectPage'
+import { AppStorageV2 } from '@kit.ArkUI'
 
 @Entry
-@ComponentV2
+@Component
 struct Index {
-  aboutToAppear(): void {
-    fullScreen.enable()
-  }
+  @StorageProp(constants.BOTTOM_AREA)
+  bottomHei: number = 0
+  @State activeIndex: number = 0 //索引
 
-  @Local activeIndex: number = 0 //索引
-
-  @LocalBuilder
+  @Builder
   TabBar(item: Tab, index: number) {
     Column({ space: 5 }) {
       ImgComp({
-        imgSrc:this.activeIndex === index ? item.activeIcon : item.icon,
-        imgWidth:24
+        imgSrc: this.activeIndex === index ? item.activeIcon : item.icon,
+        imgWidth: 24
       })
       Text(item.name)
         .fontSize(12)
         .fontColor(this.activeIndex === index ? $r('app.color.black') : $r('app.color.common_gray_01'))
     }
   }
+
+  aboutToAppear(): void {
+    fullScreen.enable()
+  }
+
   build() {
     Column() {
-      Tabs({ barPosition: BarPosition.End }) {
+      Tabs({ barPosition: BarPosition.End, index: $$this.activeIndex }) {
         ForEach(TabItems, (item: Tab, index: number) => {
           TabContent() {
             if (index === 0) {
@@ -45,7 +49,7 @@ struct Index {
       .divider({ strokeWidth: .5, color: $r('app.color.common_gray_border') })
       .animationDuration(0)
       .scrollable(false)
-      .onChange((i: number) => {
+      .onTabBarClick((i) => {
         this.activeIndex = i
       })
     }
@@ -53,8 +57,7 @@ struct Index {
     .height('100%')
     .backgroundColor($r('app.color.white'))
     .padding({
-      top: fullScreen.topHeight,
-      bottom: fullScreen.bottomHeight
+      bottom: this.bottomHei
     })
   }
 }

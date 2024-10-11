@@ -1,14 +1,14 @@
 import { TagInfoMap } from "../models/TagModel"
 
-@ComponentV2
+@Component
 export struct Tag {
   //试题难度 1-2星是简单，3-4星是一般，5星是困难
-  @Param
+  @Prop
   difficulty: number = 1
   //接受自定义文本或颜色
-  @Param
+  @Prop
   text: string = ''
-  @Param
+  @Prop
   color: ResourceColor = ''
 
   build() {

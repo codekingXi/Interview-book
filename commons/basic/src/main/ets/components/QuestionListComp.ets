@@ -8,29 +8,29 @@ import {
 } from "../../../../Index"
 import { promptAction } from "@kit.ArkUI"
 
-@ComponentV2
+@Component
 export struct QuestionListComp {
-  @Local
+  @State
   isRefreshing: boolean = false //是否在下拉
-  @Local
+  @State
   isLoading: boolean = false //是否在加载
-  @Local
+  @State
   isFinished: boolean = false //是否加载完成
-  @Param
+  @Prop
   activeIndex: number = 0
-  @Param
+  @Prop
   index: number = 0
-  @Local
+  @State
   list: QuestionItemModel[] = []
   //获取列表数据的参数
-  @Param
+  @Prop
+  @Watch('onChangeSort')
   sort: SortType = SortType.Default
-  @Require @Param
+  @Prop
   typeId: number
-  @Local
+  @State
   page: number = 1
 
-  @Monitor('sort')
   onChangeSort() {
     if (this.activeIndex === this.index) {
       this.isRefreshing = true
@@ -67,7 +67,7 @@ export struct QuestionListComp {
   }
 
   //list底部内容
-  @LocalBuilder
+  @Builder
   loadMoreContent() {
     if (this.isLoading) {
       Row({ space: 4 }) {

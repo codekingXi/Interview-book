@@ -1,10 +1,9 @@
 import { QuestionItemModel } from '../models/QuestionItemModel'
 import { Tag } from './TagComp'
 
-@ComponentV2
+@Component
 export struct QuestionItemComp {
-  @Require
-  @Param
+  @Prop
   item: QuestionItemModel = {} as QuestionItemModel
 
   build() {

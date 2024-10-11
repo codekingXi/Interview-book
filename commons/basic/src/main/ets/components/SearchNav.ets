@@ -8,18 +8,18 @@ import { ImgComp } from './ImgComp'
  * @param leftContent 左侧内容 可不传
  * @param rightContent 右侧内容 可不传
  * */
-@ComponentV2
+@Component
 export struct SearchNav {
-  @Require @Param imgSrc: imgType = ''
-  @Require @Param imgWidth: Length = 0
-  @Param placeHolderText: string = '输入关键字~'
-  @Param placeHolderColor: ResourceColor = '#ffa7a7a7'
-  @Param SearchWidth: Length = 100
-  @Param SearchHeight: Length = 32
-  @Param SearchBgColor: ResourceColor = '#ffeaeaea'
-  @Param layoutWeightValue: number = 0
-  @Param space: number = 16
-  @Param SearchNavBgColor: ResourceColor = ''
+  @Prop imgSrc: imgType = ''
+  @Prop imgWidth: Length = 0
+  @Prop placeHolderText: string = '输入关键字~'
+  @Prop placeHolderColor: ResourceColor = '#ffa7a7a7'
+  @Prop SearchWidth: Length = 100
+  @Prop SearchHeight: Length = 32
+  @Prop SearchBgColor: ResourceColor = '#ffeaeaea'
+  @Prop layoutWeightValue: number = 0
+  @Prop space: number = 16
+  @Prop SearchNavBgColor: ResourceColor = ''
   @BuilderParam
   leftContent: () => void = this.default
   @BuilderParam

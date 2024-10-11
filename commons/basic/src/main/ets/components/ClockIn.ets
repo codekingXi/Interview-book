@@ -1,6 +1,6 @@
-@ComponentV2
+@Component
 export struct ClocKIn {
-  @Param
+  @Prop
   clockCount: number = 0 //0 代表未打卡
 
   build() {

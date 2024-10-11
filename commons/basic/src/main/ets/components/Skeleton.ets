@@ -1,8 +1,8 @@
 /**
  * 骨架屏*/
-@ComponentV2
+@Component
 export struct Skeleton {
-  @LocalBuilder
+  @Builder
   defaultBuilder() {
   }
 

@@ -1,6 +1,6 @@
-@ComponentV2
+@Component
 export struct QuestionDay {
-  @Param questionContent: string = 'ArkTS的特性是什么?'
+  @Prop questionContent: string = 'ArkTS的特性是什么?'
 
   build() {
     Column({ space: 6 }) {

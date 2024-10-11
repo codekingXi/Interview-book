@@ -17,3 +17,5 @@ export * from './QuestionListComp'
 export * from './Skeleton'
 
 export * from './SkeletonItem'
+
+export * from './NavBar'

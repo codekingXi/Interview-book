@@ -6,41 +6,40 @@ import { imgType } from '../type'
  * @param imgWidth 宽度 必传
  * @author ZhangYangXi
  * */
-@ComponentV2
+@Component
 export struct ImgComp {
-  @Require
-  @Param
+
+  @Prop
   imgSrc: imgType = '' //图片地址
-  @Require
-  @Param
+  @Prop
   imgWidth: Length = 0 //宽度
-  @Param
+  @Prop
   imgHeight: Length = 0 //高度
-  @Param
+  @Prop
   isFillColor: boolean = false //是否填充颜色
-  @Param
+  @Prop
   fillColor: ResourceColor = ''
-  @Param
+  @Prop
   isDraggable: boolean = false //图片是否可拖拽
-  @Param
+  @Prop
   ImageFitType: ImageFit = ImageFit.Contain //图片压缩类型
-  @Param
+  @Prop
   color_1: ResourceColor = '' //外部色值1
-  @Param
+  @Prop
   color_2: ResourceColor = '' //外部色值2
-  @Param
+  @Prop
   bordWidth: number = 0 //边框宽度
-  @Param
+  @Prop
   bordColor: ResourceColor = '' //边框颜色
-  @Param
+  @Prop
   shadowValue: number | Resource = 0 //阴影值
-  @Param
+  @Prop
   shadowColor: string | Color | Resource = '' //阴影颜色
-  @Param
+  @Prop
   aspectRatioValue: number = 0 //宽高比
-  @Param
+  @Prop
   marginLeft:number=0
-  @Param
+  @Prop
   marginRight:number=0
   build() {
     Image(this.imgSrc)
