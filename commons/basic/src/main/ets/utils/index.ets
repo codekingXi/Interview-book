@@ -7,3 +7,5 @@ export * from './StatusBar'
 export * from './BasicDataSource'
 
 export * from './HttpClass'
+
+export * from './Time'
