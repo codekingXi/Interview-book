@@ -86,6 +86,7 @@ export struct QuestionListComp {
         .height(80)
         .textAlign(TextAlign.Center)
         .fontColor($r('app.color.common_gray_01'))
+        .margin({ bottom: 35 })
     }
   }
 
