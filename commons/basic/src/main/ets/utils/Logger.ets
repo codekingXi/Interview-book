@@ -1,7 +1,7 @@
 import { hilog } from '@kit.PerformanceAnalysisKit'
 
 //二次封装hilog
-const Tag_Name: string = "LogSystem"
+const Tag_Name: string = "Log"
 
 class Logger {
   private domain: number //域名
