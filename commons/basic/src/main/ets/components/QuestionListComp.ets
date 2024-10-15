@@ -69,25 +69,24 @@ export struct QuestionListComp {
   //list底部内容
   @Builder
   loadMoreContent() {
-    if (this.isLoading) {
-      Row({ space: 4 }) {
-        LoadingProgress()
-          .width(20)
-        Text('正在努力加载中...')
+    Row() {
+      if (this.isLoading) {
+        Row({ space: 4 }) {
+          LoadingProgress()
+            .width(20)
+          Text('正在努力加载中...')
+            .fontColor($r('app.color.common_gray_01'))
+        }
+      } else if (this.isFinished) {
+        Text('我是有底线的~')
           .fontColor($r('app.color.common_gray_01'))
       }
-      .width('100%')
-      .height(80)
-      .justifyContent(FlexAlign.Center)
-
-    } else if (this.isFinished) {
-      Text('我是有底线的~')
-        .width('100%')
-        .height(80)
-        .textAlign(TextAlign.Center)
-        .fontColor($r('app.color.common_gray_01'))
-        .margin({ bottom: 40 })
     }
+    .width('100%')
+    .height(100)
+    .justifyContent(FlexAlign.Center)
+    .alignItems(VerticalAlign.Top)
+    .padding({ top: 15 })
   }
 
   getQuestionListItem(): Promise<PageData<QuestionItemModel>> {
