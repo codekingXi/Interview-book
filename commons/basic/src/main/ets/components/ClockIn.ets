@@ -14,7 +14,7 @@ export struct ClocKIn {
         Column() {
           Text('已连续打卡').fontSize(8)
           Text() {
-            Span(this.clockCount > 999 ? '999' : this.clockCount.toString())
+            Span(this.clockCount > 999 ? '999' : this.clockCount?.toString())
               .fontSize(12).fontColor($r('app.color.black'))
               .fontWeight(FontWeight.Bold)
             Span('天')
