@@ -43,7 +43,7 @@ struct SocketAI {
         this.ws.send('40') //回复40
       } else if ((value as string).startsWith('2')) { //2开头
         this.ws.send('3') //回复3
-      } else if ((value as string).startsWith('42')) { //3靠头 42开头是信息
+      } else if ((value as string).startsWith('42')) { //协议3 42开头是信息
         logger.info(value as string);
         //消息追加到页面
         const message = JSON.parse((value as string).replace('42', '')) as [string, MessageStruct]
@@ -148,7 +148,8 @@ struct SocketAI {
             .onChange((value) => {
               this.contentStr = value
             })
-            .onSubmit(() => {
+            .onSubmit((key, event) => {
+              event.keepEditableState()
               if (this.contentStr) {
                 this.sendMessage()
               }
