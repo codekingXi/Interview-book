@@ -9,3 +9,5 @@ export * from './BasicDataSource'
 export * from './HttpClass'
 
 export * from './Time'
+
+export * from './Auth'
