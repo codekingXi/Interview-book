@@ -1,4 +1,4 @@
-import { constants, httpClass, LoginParam, NavBar, User } from 'basic'
+import { auth, constants, httpClass, LoginParam, NavBar, User } from 'basic'
 import { promptAction, router } from '@kit.ArkUI'
 
 @Entry
@@ -38,7 +38,7 @@ struct LoginPage {
       }
     })
     this.loading = false
-    AppStorage.setOrCreate('User', user)
+    auth.setUser(user)
     router.back()
   }
 

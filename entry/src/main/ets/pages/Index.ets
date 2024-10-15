@@ -1,8 +1,10 @@
-import { Tab, fullScreen, TabItems, ImgComp, constants } from 'basic'
+import { Tab, fullScreen, TabItems, ImgComp, constants, auth } from 'basic'
 import { HomePage } from './HomePage'
 import { InterviewPage } from './InterviewPage'
 import { MinePage } from './MinePage'
 import { ProjectPage } from './ProjectPage'
+
+auth.initUser()
 
 @Entry
 @Component

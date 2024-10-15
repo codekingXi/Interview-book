@@ -1,5 +1,5 @@
 import { router } from '@kit.ArkUI'
-import { ClocKIn, constants, formatTime, Nav, statusBar, Tool, User } from 'basic'
+import { ClocKIn, constants, formatTime, httpClass, logger, Nav, statusBar, Tool, User, UserStoreKey } from 'basic'
 
 
 @Component
@@ -8,7 +8,7 @@ export struct MinePage {
   topHeight: number = 0
   @StorageProp(constants.BOTTOM_AREA)
   bottomHeight: number = 0
-  @StorageProp('User')
+  @StorageProp(UserStoreKey)
   User: User = {} as User
 
   @Builder

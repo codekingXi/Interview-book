@@ -1,11 +1,12 @@
-import { Banner, bannerArr, CalendarComp, ClocKIn, constants, DataSource, ImgComp, SearchNav, User } from "basic"
+import { Banner, bannerArr, CalendarComp, ClocKIn, constants, DataSource, ImgComp, SearchNav, User,
+  UserStoreKey } from "basic"
 import { Category } from "../views/Home"
 
 @Component
 export struct HomePage {
   @StorageProp(constants.TOP_AREA)
   topHeight: number = 0
-  @StorageProp('User')
+  @StorageProp(UserStoreKey)
   User: User = {} as User
 
   @Builder
@@ -18,7 +19,7 @@ export struct HomePage {
 
   @Builder
   Clock() {
-    ClocKIn({ clockCount: this.User.clockinNumbers || 0 })
+    ClocKIn({ clockCount: this.User.clockinNumbers})
       .onClick(() => {
 
       })

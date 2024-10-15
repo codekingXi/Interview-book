@@ -1,5 +1,6 @@
-import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "@ohos/axios"
-import { logger } from "../../../../Index"
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "@ohos/axios"
+import { auth, logger, User } from "../../../../Index"
+import { promptAction } from "@kit.ArkUI"
 
 interface Res<T> {
   //成功表示 true 成功 可选
@@ -20,6 +21,10 @@ const instance = axios.create({
 })
 //请求拦截器
 instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const user = auth.getUser()
+  if (user.token) {
+    config.headers.Authorization = `Bearer ${user.token}`
+  }
   return config
 }, (e: Error) => {
   logger.error('请求参数异常')
@@ -33,7 +38,19 @@ instance.interceptors.response.use((res: AxiosResponse) => {
     return res.data.data
   }
   return Promise.reject(new Error(JSON.stringify(res.data)))
-}, (e: Error) => {
+}, (e: AxiosError) => {
+  if (e.response?.status === 401) {
+    //提示登录失败
+    promptAction.showToast({
+      message: '登录失败，请重新登录'
+    })
+    //重新登录 删除无效token
+    auth.setUser({} as User)
+    return
+  }
+  promptAction.showToast({
+    message: '响应错误' + e.message
+  })
   logger.error('响应结果异常')
   return Promise.reject(e)
 })
