@@ -8,6 +8,7 @@ import {
   SkeletonItem,
   UserStoreKey
 } from "basic"
+import { promptAction } from "@kit.ArkUI"
 
 @Component
 export struct Category {
@@ -72,6 +73,14 @@ export struct Category {
   }
 
   aboutToAppear() {
+    promptAction.showToast({
+      message: '登录后才能看到数据哦!',
+      alignment: Alignment.Center,
+      backgroundColor: '#ff434343',
+      textColor: Color.White,
+      backgroundBlurStyle: BlurStyle.NONE
+    })
+    this.loading = true
     // 当UserStoreKey对应的事件被触发时
     getContext().eventHub.on(UserStoreKey, () => {
       //获取列表数据
@@ -189,8 +198,8 @@ export struct Category {
         Row({ space: 8 }) {
           SkeletonItem({ widthValue: 50 })
           SkeletonItem({ widthValue: 90 })
-          SkeletonItem({ widthValue: 70 })
-          SkeletonItem({ widthValue: 80 })
+          SkeletonItem({ widthValue: 60 })
+          SkeletonItem({ widthValue: 110 })
         }.height(44)
         .width('100%')
         .padding(10)
