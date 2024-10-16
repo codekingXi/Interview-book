@@ -4,7 +4,8 @@ import {
   PageData,
   QuestionItemModel,
   QuestionListParams,
-  SortType
+  SortType,
+  auth
 } from "../../../../Index"
 import { promptAction } from "@kit.ArkUI"
 
@@ -110,6 +111,11 @@ export struct QuestionListComp {
         ForEach(this.list, (item: QuestionItemModel) => {
           ListItem() {
             QuestionItemComp({ item })
+              .onClick(() => {
+                auth.checkAuth({
+                  url: 'pages/QuestionPage'
+                })
+              })
           }
         })
         this.loadMoreContent()
