@@ -1,4 +1,13 @@
-import { ImgComp, QuestionListComp, QuestionType, httpClass, SortType, Skeleton, SkeletonItem } from "basic"
+import {
+  ImgComp,
+  QuestionListComp,
+  QuestionType,
+  httpClass,
+  SortType,
+  Skeleton,
+  SkeletonItem,
+  UserStoreKey
+} from "basic"
 
 @Component
 export struct Category {
@@ -63,7 +72,11 @@ export struct Category {
   }
 
   aboutToAppear() {
-    this.getQuestionList()
+    // 当UserStoreKey对应的事件被触发时
+    getContext().eventHub.on(UserStoreKey, () => {
+      //获取列表数据
+      this.getQuestionList()
+    })
   }
 
   @Builder
