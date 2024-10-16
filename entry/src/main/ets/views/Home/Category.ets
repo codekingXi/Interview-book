@@ -64,7 +64,7 @@ export struct Category {
   }
 
   async getQuestionList() {
-    this.loading = true
+
     const res = await httpClass.request<QuestionType[]>({
       url: 'hm/question/type'
     })
@@ -73,6 +73,7 @@ export struct Category {
   }
 
   aboutToAppear() {
+    this.loading = true
     promptAction.showToast({
       message: '登录后才能看到数据哦!',
       alignment: Alignment.Center,
@@ -80,7 +81,6 @@ export struct Category {
       textColor: Color.White,
       backgroundBlurStyle: BlurStyle.NONE
     })
-    this.loading = true
     // 当UserStoreKey对应的事件被触发时
     getContext().eventHub.on(UserStoreKey, () => {
       //获取列表数据
@@ -267,7 +267,6 @@ export struct Category {
         })
       }
     }
-
   }
 }
 
