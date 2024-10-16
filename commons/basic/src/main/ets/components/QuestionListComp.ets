@@ -5,7 +5,8 @@ import {
   QuestionItemModel,
   QuestionListParams,
   SortType,
-  auth
+  auth,
+  QuestionPageParams
 } from "../../../../Index"
 import { promptAction } from "@kit.ArkUI"
 
@@ -113,7 +114,11 @@ export struct QuestionListComp {
             QuestionItemComp({ item })
               .onClick(() => {
                 auth.checkAuth({
-                  url: 'pages/QuestionPage'
+                  url: 'pages/QuestionPage',
+                  params: {
+                    item,
+                    list: this.list
+                  } as QuestionPageParams
                 })
               })
           }
