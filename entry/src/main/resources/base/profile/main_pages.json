@@ -2,6 +2,7 @@
   "src": [
     "pages/Index",
     "pages/LoginPage",
-    "pages/SocketAI"
+    "pages/SocketAI",
+    "pages/QuestionPage"
   ]
 }
