@@ -3,6 +3,7 @@
     "pages/Index",
     "pages/LoginPage",
     "pages/SocketAI",
-    "pages/QuestionPage"
+    "pages/QuestionPage",
+    "pages/WebPage"
   ]
 }
