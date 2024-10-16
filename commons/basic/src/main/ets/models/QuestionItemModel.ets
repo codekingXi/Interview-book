@@ -17,10 +17,26 @@ export interface QuestionItemModel {
   readFlag: 0 | 1;
 }
 
+export interface QuestionDetail extends QuestionItemModel {
+  /* 答案 */
+  answer: string
+  /* 是否收藏 */
+  collectFlag: 0 | 1
+  /* 是否点赞 */
+  likeFlag: 0 | 1
+  /* 所属模块 */
+  stage: string[]
+}
+
 export interface PageData<T> {
   total: number
   pageTotal: number
   rows: T[]
+}
+
+export interface QuestionPageParams {
+  item: QuestionItemModel,
+  list: QuestionItemModel[]
 }
 
 export interface QuestionListParams {
