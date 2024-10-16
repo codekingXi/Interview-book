@@ -1,4 +1,4 @@
-import { auth, constants, httpClass, LoginParam, NavBar, User } from 'basic'
+import { auth, constants, httpClass, LoginParam, NavBar, User, UserStoreKey } from 'basic'
 import { promptAction, router } from '@kit.ArkUI'
 
 @Entry
@@ -39,7 +39,17 @@ struct LoginPage {
     })
     this.loading = false
     auth.setUser(user)
-    router.back()
+    //发送事件
+    getContext().eventHub.emit(UserStoreKey)
+    const params = router.getParams() as Record<string, string>
+    if (params) {
+      router.replaceUrl({
+        url: params.return_url,
+        params
+      })
+    } else {
+      router.back()
+    }
   }
 
   build() {
