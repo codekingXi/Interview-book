@@ -25,17 +25,31 @@ struct QuestionPage {
     this.controller.loadUrl($rawfile('question.html'))
   }
 
+  /**
+   * 切换题目
+   * @param step 切换题目的步数，可以是正数（向下切换）或负数（向上切换）
+   */
   async toggleQuestion(step: number) {
+    // 索引
     const index = this.activeIndex + step
-    if (index < 0 || index > this.list.length) {
-      promptAction.showToast({ message: '没有更多题目了~' })
-    } else {
-      this.activeIndex = index
-      const item = this.list[index]
-      this.item = await this.getQuestionDetail(item.id)
-      this.controller.runJavaScript(`writeHtml(\`${this.item.answer}\`)`)
-      
+    // 检查索引是否超出列表范围
+    if (index <= 0 || index >= this.list.length) {
+      return promptAction.showToast({ message: '没有更多题目了~' })
     }
+    // 索引有效,切换题目
+    this.activeIndex = index
+    const item = this.list[index]
+    // 如果请求过答案就缓存
+    if (item.answer) {
+      this.item = item
+    } else {
+      // 获取题目的详细信息
+      this.item = await this.getQuestionDetail(item.id)
+      // 更新列表
+      this.list[index] = this.item
+    }
+    // 重新渲染内容
+    this.controller.runJavaScript(`writeHtml(\`${this.item.answer}\`)`)
   }
 
   // 获取问题详情接口的返回结果
@@ -119,17 +133,21 @@ struct QuestionPage {
           Image($r('sys.media.ohos_ic_public_arrow_left'))
             .width(20)
             .aspectRatio(1)
-            .fillColor($r('app.color.common_gray_01'))
+            .fillColor(this.activeIndex <= 0 ? $r('app.color.common_gray_01') :
+            $r('sys.media.ohos_ic_public_arrow_right'))
           Text(' 上一题')
-            .fontColor($r('app.color.common_gray_01'))
+            .fontColor(this.activeIndex <= 0 ? $r('app.color.common_gray_01') :
+            $r('sys.media.ohos_ic_public_arrow_right'))
         }.onClick(() => {
           this.toggleQuestion(-1)
         })
 
         Row() {
           Text('下一题 ')
-            .fontColor($r('app.color.common_gray_03'))
-          Image($r('sys.media.ohos_ic_public_arrow_right'))
+            .fontColor(this.activeIndex >= this.list.length - 1 ? $r('app.color.common_gray_01') :
+            $r('sys.media.ohos_ic_public_arrow_right'))
+          Image(this.activeIndex >= this.list.length - 1 ? $r('app.color.common_gray_01') :
+          $r('sys.media.ohos_ic_public_arrow_right'))
             .width(20)
             .aspectRatio(1)
             .fillColor($r('app.color.common_gray_03'))
