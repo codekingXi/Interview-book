@@ -133,11 +133,9 @@ struct QuestionPage {
           Image($r('sys.media.ohos_ic_public_arrow_left'))
             .width(20)
             .aspectRatio(1)
-            .fillColor(this.activeIndex <= 0 ? $r('app.color.common_gray_01') :
-            $r('sys.media.ohos_ic_public_arrow_right'))
+            .fillColor(this.activeIndex <= 0 ? $r('app.color.common_gray_01') : $r('app.color.common_gray_03'))
           Text(' 上一题')
-            .fontColor(this.activeIndex <= 0 ? $r('app.color.common_gray_01') :
-            $r('sys.media.ohos_ic_public_arrow_right'))
+            .fontColor(this.activeIndex <= 0 ? $r('app.color.common_gray_01') : $r('app.color.common_gray_03'))
         }.onClick(() => {
           this.toggleQuestion(-1)
         })
@@ -145,12 +143,12 @@ struct QuestionPage {
         Row() {
           Text('下一题 ')
             .fontColor(this.activeIndex >= this.list.length - 1 ? $r('app.color.common_gray_01') :
-            $r('sys.media.ohos_ic_public_arrow_right'))
-          Image(this.activeIndex >= this.list.length - 1 ? $r('app.color.common_gray_01') :
-          $r('sys.media.ohos_ic_public_arrow_right'))
+            $r('app.color.common_gray_03'))
+          Image($r('sys.media.ohos_ic_public_arrow_right'))
             .width(20)
             .aspectRatio(1)
-            .fillColor($r('app.color.common_gray_03'))
+            .fillColor(this.activeIndex >= this.list.length - 1 ? $r('app.color.common_gray_01') :
+            $r('app.color.common_gray_03'))
         }.onClick(() => {
           this.toggleQuestion(1)
         })
