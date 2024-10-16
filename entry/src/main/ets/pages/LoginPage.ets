@@ -91,12 +91,30 @@ struct LoginPage {
           Text('用户协议')
             .fontSize(14)
             .padding({ right: 4 })
+            .onClick(() => {
+              router.pushUrl({
+                url: 'pages/WebPage',
+                params: {
+                  title: '用户协议',
+                  src: 'http://110.41.143.89/user'
+                }
+              })
+            })
           Text('和')
             .fontSize(14)
             .fontColor($r('app.color.common_gray_01'))
             .padding({ right: 4 })
           Text('隐私政策')
             .fontSize(14)
+            .onClick(() => {
+              router.pushUrl({
+                url: 'pages/WebPage',
+                params: {
+                  title: '隐私政策',
+                  src: 'http://110.41.143.89/privacy'
+                }
+              })
+            })
         }
         .width('100%')
 
