@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "@ohos/axios"
 import { auth, logger, User } from "../../../../Index"
-import { promptAction } from "@kit.ArkUI"
+import { promptAction, router } from "@kit.ArkUI"
 
 interface Res<T> {
   //成功表示 true 成功 可选
@@ -46,6 +46,10 @@ instance.interceptors.response.use((res: AxiosResponse) => {
     })
     //重新登录 删除无效token
     auth.setUser({} as User)
+    //使用单例模式跳转登录页
+    router.pushUrl({
+      url: 'pages/LoginPage'
+    }, router.RouterMode.Single)
     return
   }
   promptAction.showToast({
