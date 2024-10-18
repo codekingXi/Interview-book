@@ -8,7 +8,6 @@ import {
   SkeletonItem,
   UserStoreKey
 } from "basic"
-import { promptAction } from "@kit.ArkUI"
 
 @Component
 export struct Category {
@@ -64,7 +63,7 @@ export struct Category {
   }
 
   async getQuestionList() {
-
+    this.loading = true
     const res = await httpClass.request<QuestionType[]>({
       url: 'hm/question/type'
     })
@@ -73,15 +72,9 @@ export struct Category {
   }
 
   aboutToAppear() {
-    this.loading = true
-    promptAction.showToast({
-      message: '登录后才能看到数据哦!',
-      alignment: Alignment.Center,
-      backgroundColor: '#ff434343',
-      textColor: Color.White,
-      backgroundBlurStyle: BlurStyle.NONE
-    })
-    // 当UserStoreKey对应的事件被触发时
+    //默认请求一次数据
+    this.getQuestionList()
+    // 线程内监听事件  保障数据更新
     getContext().eventHub.on(UserStoreKey, () => {
       //获取列表数据
       this.getQuestionList()
