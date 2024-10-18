@@ -1,4 +1,4 @@
-import { constants, httpClass, NavBar, QuestionDetail, QuestionPageParams, Tag } from 'basic'
+import { constants, httpClass, LoadingDialogComp, NavBar, QuestionDetail, QuestionPageParams, Tag } from 'basic'
 import { promptAction, router } from '@kit.ArkUI'
 import { webview } from '@kit.ArkWeb'
 
@@ -12,6 +12,12 @@ struct QuestionPage {
   list: QuestionDetail[] = []
   @State
   activeIndex: number = 0
+  controller: WebviewController = new webview.WebviewController()
+  dialogController: CustomDialogController = new CustomDialogController({
+    builder: LoadingDialogComp(),
+    customStyle: true,
+    alignment: DialogAlignment.Center
+  })
 
   async aboutToAppear() {
     // 更新页面获取的参数
@@ -54,10 +60,12 @@ struct QuestionPage {
 
   // 获取问题详情接口的返回结果
   async getQuestionDetail(id: string) {
+    this.dialogController.open()
     // 通过HTTP请求获取问题的详细信息
     const result = await httpClass.request<QuestionDetail>({
       url: '/hm/question/' + id
     })
+    this.dialogController.close()
     // 返回获取到的问题详细信息
     return result
   }
@@ -88,8 +96,6 @@ struct QuestionPage {
     }
     .width(108)
   }
-
-  controller: WebviewController = new webview.WebviewController()
 
   build() {
     Column() {
