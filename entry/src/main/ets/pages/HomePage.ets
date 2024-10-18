@@ -1,5 +1,16 @@
-import { Banner, bannerArr, CalendarComp, ClocKIn, constants, DataSource, ImgComp, SearchNav, User,
-  UserStoreKey } from "basic"
+import {
+  auth,
+  Banner,
+  bannerArr,
+  CalendarComp,
+  ClocKIn,
+  constants,
+  DataSource,
+  ImgComp,
+  SearchNav,
+  User,
+  UserStoreKey
+} from "basic"
 import { Category } from "../views/Home"
 
 @Component
@@ -15,11 +26,15 @@ export struct HomePage {
       imgSrc: $r('app.media.ic_home_scan'),
       imgWidth: 20
     })
+      .onClick(() => {
+        auth.checkAuth(() => {
+        })
+      })
   }
 
   @Builder
   Clock() {
-    ClocKIn({ clockCount: this.User.clockinNumbers})
+    ClocKIn({ clockCount: this.User.clockinNumbers })
       .onClick(() => {
 
       })
