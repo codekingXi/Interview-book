@@ -19,3 +19,5 @@ export * from './Skeleton'
 export * from './SkeletonItem'
 
 export * from './NavBar'
+
+export * from './LodingDialogComp'
