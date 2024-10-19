@@ -10,6 +10,7 @@ import {
 } from 'basic'
 import { promptAction, router } from '@kit.ArkUI'
 import { webview } from '@kit.ArkWeb'
+import { QuestionShareDialog } from '../views/Question/QuestionShareDialog'
 
 @Entry
 @Component
@@ -22,8 +23,21 @@ struct QuestionPage {
   @State
   activeIndex: number = 0
   controller: WebviewController = new webview.WebviewController()
+  /**
+   * 加载中弹窗
+   */
   dialogController: CustomDialogController = new CustomDialogController({
     builder: LoadingDialogComp(),
+    customStyle: true,
+    alignment: DialogAlignment.Center
+  })
+  /**
+   * 分享弹窗
+   */
+  shareController: CustomDialogController = new CustomDialogController({
+    builder: QuestionShareDialog({
+      item: this.item
+    }),
     customStyle: true,
     alignment: DialogAlignment.Center
   })
@@ -136,6 +150,9 @@ struct QuestionPage {
         })
       MenuItem({ content: '点我反馈' })
       MenuItem({ content: '试题分享' })
+        .onClick(() => {
+          this.shareController.open()
+        })
     }
     .width(108)
   }
