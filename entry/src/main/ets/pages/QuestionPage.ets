@@ -1,4 +1,13 @@
-import { constants, httpClass, LoadingDialogComp, NavBar, QuestionDetail, QuestionPageParams, Tag } from 'basic'
+import {
+  constants,
+  httpClass,
+  LoadingDialogComp,
+  NavBar,
+  QuestionDetail,
+  QuestionOptParams,
+  QuestionPageParams,
+  Tag
+} from 'basic'
 import { promptAction, router } from '@kit.ArkUI'
 import { webview } from '@kit.ArkWeb'
 
@@ -70,6 +79,34 @@ struct QuestionPage {
     return result
   }
 
+  //点赞+收藏
+  async questionOpt(optType: 1 | 2, flag: 0 | 1) {
+    //确定参数
+    const data: QuestionOptParams = {
+      id: this.item.id,
+      optType,
+      type: 0
+    }
+    //发请求
+    await httpClass.request<null, QuestionOptParams>({
+      url: flag === 1 ? '/hm/question/opt' : '/hm/question/unOpt',
+      method: 'post',
+      data
+    })
+    //点赞操作
+    if (optType === 1) {
+      promptAction.showToast({ message: this.item.likeFlag === 0 ? '点赞成功' : '取消点赞' })
+      //更新数据
+      this.item.likeFlag = this.item.likeFlag === 0 ? 1 : 0
+    }
+    //收藏操作
+    if (optType === 2) {
+      promptAction.showToast({ message: this.item.collectFlag === 0 ? '收藏成功' : '取消收藏' })
+      //更新数据
+      this.item.collectFlag = this.item.collectFlag === 0 ? 1 : 0
+    }
+  }
+
   @Builder
   TitleBuilder(text: string) {
     Row() {
@@ -90,7 +127,13 @@ struct QuestionPage {
   MenuBuilder() {
     Menu() {
       MenuItem({ content: '点赞' })
+        .onClick(() => {
+          this.questionOpt(1, this.item.likeFlag === 0 ? 1 : 0)
+        })
       MenuItem({ content: '收藏' })
+        .onClick(() => {
+          this.questionOpt(2, this.item.collectFlag === 0 ? 1 : 0)
+        })
       MenuItem({ content: '点我反馈' })
       MenuItem({ content: '试题分享' })
     }
