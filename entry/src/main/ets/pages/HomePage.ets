@@ -6,12 +6,16 @@ import {
   ClocKIn,
   constants,
   DataSource,
+  httpClass,
   ImgComp,
+  QuestionDetail,
   SearchNav,
   User,
   UserStoreKey
 } from "basic"
 import { Category } from "../views/Home"
+import { scanBarcode } from "@kit.ScanKit"
+import { promptAction, router } from "@kit.ArkUI"
 
 @Component
 export struct HomePage {
@@ -19,6 +23,33 @@ export struct HomePage {
   topHeight: number = 0
   @StorageProp(UserStoreKey)
   User: User = {} as User
+
+  /**
+   * 扫码*/
+  async scanCode() {
+    //如果系统支持扫码
+    if (canIUse('SystemCapability.Multimedia.Scan.ScanBarcode')) {
+      //唤起扫码界面
+      const res = await scanBarcode.startScanForResult(getContext())
+      const item = await httpClass.request<QuestionDetail>({
+        url: '/hm/question/' + res.originalValue
+      })
+      if (item) {
+        //跳转至问题详情页
+        router.pushUrl({
+          url: 'pages/QuestionPage',
+          params: {
+            item,
+            list: [item]
+          }
+        })
+      } else {
+        promptAction.showToast({ message: '请扫描来自面试通分享的二维码' })
+      }
+    } else {
+      promptAction.showToast({ message: '当前设备不支持扫码' })
+    }
+  }
 
   @Builder
   scan() {
@@ -28,6 +59,7 @@ export struct HomePage {
     })
       .onClick(() => {
         auth.checkAuth(() => {
+          this.scanCode()
         })
       })
   }
