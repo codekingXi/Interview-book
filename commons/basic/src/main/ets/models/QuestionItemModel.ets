@@ -46,6 +46,15 @@ export interface QuestionListParams {
   page?: number
   pageSize?: number
 }
+/**
+ * @param type 0试题 1面经
+ * @param optType 1点赞 2收藏
+ * */
+export interface QuestionOptParams {
+  id: string
+  type: 0 | 1
+  optType: 1 | 2
+}
 
 export enum SortType {
   Default = 0,
