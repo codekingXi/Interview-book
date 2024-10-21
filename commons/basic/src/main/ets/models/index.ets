@@ -12,3 +12,5 @@ export * from './QuestionItemModel'
 export * from './MineModel'
 
 export * from './Login'
+
+export * from './TimeModel'
