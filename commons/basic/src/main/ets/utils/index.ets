@@ -13,3 +13,5 @@ export * from './Time'
 export * from './Auth'
 
 export * from './Tracking'
+
+export * from './History'
