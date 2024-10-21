@@ -1,4 +1,4 @@
-import { auth, constants, httpClass, LoginParam, NavBar, User, UserStoreKey } from 'basic'
+import { auth, constants, httpClass, LoginParam, NavBar, tracking, User, UserStoreKey } from 'basic'
 import { promptAction, router } from '@kit.ArkUI'
 
 @Entry
@@ -39,6 +39,7 @@ struct LoginPage {
     })
     this.loading = false
     auth.setUser(user)
+    tracking.report(true)
     //发送事件
     getContext().eventHub.emit(UserStoreKey)
     const params = router.getParams() as Record<string, string>
