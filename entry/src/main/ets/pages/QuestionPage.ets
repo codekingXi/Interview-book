@@ -6,7 +6,8 @@ import {
   QuestionDetail,
   QuestionOptParams,
   QuestionPageParams,
-  Tag
+  Tag,
+  tracking
 } from 'basic'
 import { promptAction, router } from '@kit.ArkUI'
 import { webview } from '@kit.ArkWeb'
@@ -41,6 +42,7 @@ struct QuestionPage {
     customStyle: true,
     alignment: DialogAlignment.Center
   })
+  startTime: number = Date.now()
 
   async aboutToAppear() {
     // 更新页面获取的参数
@@ -52,6 +54,20 @@ struct QuestionPage {
     this.item = await this.getQuestionDetail(this.item.id)
     //等拿到到数据之后再加载网页
     this.controller.loadUrl($rawfile('question.html'))
+  }
+
+  onPageShow(): void {
+    //记录开始时间
+    this.startTime = Date.now()
+  }
+
+  onPageHide(): void {
+    //记录点
+    tracking.record(this.item.id, this.startTime, Date.now())
+    //每次埋点都是最新的记录
+    this.startTime = Date.now()
+    //上报
+    tracking.report()
   }
 
   /**
@@ -79,6 +95,8 @@ struct QuestionPage {
     }
     // 重新渲染内容
     this.controller.runJavaScript(`writeHtml(\`${this.item.answer}\`)`)
+    tracking.record(this.item.id, this.startTime, Date.now())
+    this.startTime = Date.now()
   }
 
   // 获取问题详情接口的返回结果
