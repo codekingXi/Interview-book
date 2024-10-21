@@ -11,3 +11,5 @@ export * from './HttpClass'
 export * from './Time'
 
 export * from './Auth'
+
+export * from './Tracking'
