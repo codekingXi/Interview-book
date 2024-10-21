@@ -45,7 +45,9 @@ export interface QuestionListParams {
   sort?: SortType
   page?: number
   pageSize?: number
+  keywords?: string
 }
+
 /**
  * @param type 0试题 1面经
  * @param optType 1点赞 2收藏
