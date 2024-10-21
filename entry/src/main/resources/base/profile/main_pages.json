@@ -4,6 +4,7 @@
     "pages/LoginPage",
     "pages/SocketAI",
     "pages/QuestionPage",
-    "pages/WebPage"
+    "pages/WebPage",
+    "pages/SearchPage"
   ]
 }
