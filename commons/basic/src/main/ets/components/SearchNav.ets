@@ -1,5 +1,6 @@
 import { imgType } from '../type'
 import { ImgComp } from './ImgComp'
+import { router } from '@kit.ArkUI'
 
 /**
  * 搜索栏
@@ -24,7 +25,11 @@ export struct SearchNav {
   leftContent: () => void = this.default
   @BuilderParam
   rightContent: () => void = this.default
-  @Builder default(){}
+
+  @Builder
+  default() {
+  }
+
   build() {
     Row({ space: this.space }) {
       //左侧内容
@@ -48,6 +53,11 @@ export struct SearchNav {
       .borderRadius(this.SearchHeight as number / 2)
       .layoutWeight(this.layoutWeightValue)
       .backgroundColor(this.SearchBgColor)
+      .onClick(() => {
+        router.pushUrl({
+          url: 'pages/SearchPage'
+        })
+      })
 
       //右侧内容
       if (this.rightContent) {
