@@ -29,6 +29,8 @@ export struct QuestionListComp {
   @Watch('onChangeSort')
   sort: SortType = SortType.Default
   @Prop
+  keyword:string
+  @Prop
   typeId: number
   @State
   page: number = 1
@@ -99,7 +101,8 @@ export struct QuestionListComp {
         questionBankType: 10,
         sort: this.sort,
         page: this.page,
-        pageSize: 10
+        pageSize: 10,
+        keywords:this.keyword
       } as QuestionListParams
     })
   }
