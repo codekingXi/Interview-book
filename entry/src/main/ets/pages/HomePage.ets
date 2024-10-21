@@ -10,6 +10,7 @@ import {
   ImgComp,
   QuestionDetail,
   SearchNav,
+  tracking,
   User,
   UserStoreKey
 } from "basic"
@@ -49,6 +50,10 @@ export struct HomePage {
     } else {
       promptAction.showToast({ message: '当前设备不支持扫码' })
     }
+  }
+
+  aboutToAppear(): void {
+    tracking.report(true)
   }
 
   @Builder
