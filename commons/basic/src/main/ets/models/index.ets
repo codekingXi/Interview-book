@@ -18,3 +18,5 @@ export * from './TimeModel'
 export * from './ClockIn'
 
 export * from './Study'
+
+export * from './Word'
