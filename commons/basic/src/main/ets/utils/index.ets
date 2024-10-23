@@ -15,3 +15,5 @@ export * from './Auth'
 export * from './Tracking'
 
 export * from './History'
+
+export * from './Fn'
