@@ -7,6 +7,7 @@
     "pages/WebPage",
     "pages/SearchPage",
     "pages/ClockInPage",
-    "pages/StudyTimePage"
+    "pages/StudyTimePage",
+    "pages/WordPage"
   ]
 }
