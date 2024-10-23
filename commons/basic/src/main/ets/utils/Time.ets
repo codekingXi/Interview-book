@@ -47,8 +47,9 @@ export const requestClockIn = async () => {
     })
   }
 }
+
 /**
  * 计算百分比*/
 export const calePercent = (done: number, total: number) => {
-  return Math.round((done / total * 100)).toString() + '%'
+  return Math.round((done / total * 100)) + '%'
 }
