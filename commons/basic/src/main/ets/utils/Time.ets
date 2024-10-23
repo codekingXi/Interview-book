@@ -30,7 +30,7 @@ export const requestClockIn = async () => {
     if (user.clockinNumbers === 0) {
       //没打卡 就打卡
       const res = await httpClass.request<ClockRes>({
-        url: '/hm/clockin',
+        url: 'hm/clockin',
         method: 'post'
       })
       user.clockinNumbers = res.clockinNumbers
