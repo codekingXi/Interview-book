@@ -63,8 +63,8 @@ struct ClockInPage {
     Column({ space: 16 }) {
       NavBar({ title: '每日打卡', showRightIcon: false })
       Row() {
-        this.dayBuilder({ day: 100, text: '累计打卡' })
-        this.dayBuilder({ day: 10, text: '连续打卡' })
+        this.dayBuilder({ day: this.clockInfo.totalClockinNumber, text: '累计打卡' })
+        this.dayBuilder({ day: this.clockInfo.clockinNumbers, text: '连续打卡' })
       }
       .padding({
         top: 10,
