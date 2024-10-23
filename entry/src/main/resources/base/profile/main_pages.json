@@ -5,6 +5,8 @@
     "pages/SocketAI",
     "pages/QuestionPage",
     "pages/WebPage",
-    "pages/SearchPage"
+    "pages/SearchPage",
+    "pages/ClockInPage",
+    "pages/StudyTimePage"
   ]
 }
