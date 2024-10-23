@@ -16,3 +16,5 @@ export * from './Login'
 export * from './TimeModel'
 
 export * from './ClockIn'
+
+export * from './Study'
