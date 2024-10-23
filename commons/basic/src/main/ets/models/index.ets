@@ -14,3 +14,5 @@ export * from './MineModel'
 export * from './Login'
 
 export * from './TimeModel'
+
+export * from './ClockIn'
