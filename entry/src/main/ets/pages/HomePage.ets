@@ -9,6 +9,7 @@ import {
   httpClass,
   ImgComp,
   QuestionDetail,
+  requestClockIn,
   SearchNav,
   tracking,
   User,
@@ -73,7 +74,7 @@ export struct HomePage {
   Clock() {
     ClocKIn({ clockCount: this.User.clockinNumbers })
       .onClick(() => {
-
+        requestClockIn()
       })
   }
 
