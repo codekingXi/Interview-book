@@ -150,6 +150,9 @@ export struct MinePage {
           other: formatTime(this.User.totalTime),
           onClick: () => {
             // TODO
+            router.pushUrl({
+              url: 'pages/StudyTimePage'
+            })
           }
         })
       }
