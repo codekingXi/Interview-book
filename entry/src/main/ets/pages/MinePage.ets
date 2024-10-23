@@ -1,5 +1,15 @@
 import { router } from '@kit.ArkUI'
-import { ClocKIn, constants, formatTime, httpClass, logger, Nav, statusBar, Tool, User, UserStoreKey } from 'basic'
+import {
+  ClocKIn,
+  constants,
+  formatTime,
+  Nav,
+  requestClockIn,
+  statusBar,
+  Tool,
+  User,
+  UserStoreKey
+} from 'basic'
 
 
 @Component
@@ -110,6 +120,9 @@ export struct MinePage {
         }
 
         ClocKIn({ clockCount: this.User.clockinNumbers || 0 })
+          .onClick(() => {
+            requestClockIn()
+          })
       }
       .width('100%')
       .height(100)
