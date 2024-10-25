@@ -1,5 +1,6 @@
 import { getStrFromJson, NavBar, WordItem, Words } from 'basic'
 import { webview } from '@kit.ArkWeb'
+import { WordDialog } from '../views/Word/WordDialog'
 
 @Entry
 @Component
@@ -11,10 +12,28 @@ struct WordPage {
   wordKey: string = ''
   @State showTypeSheet: boolean = false
   @State showCodeSheet: boolean = false
-  scroller: Scroller = new Scroller()
   @State
   currentCode: string = ''
+  @State
+  currentZh: string = ''
+  @State
+  currentEn: string = ''
+  /**
+   * 滚动条控制器*/
+  scroller: Scroller = new Scroller()
+  /**
+   * 详情代码控制器*/
   webController: WebviewController = new webview.WebviewController()
+  /**
+   * 朗读弹层控制器*/
+  wordController: CustomDialogController = new CustomDialogController({
+    builder: WordDialog({
+      en: this.currentEn,
+      zh: this.currentZh,
+    }),
+    alignment: DialogAlignment.Center,
+    customStyle: true
+  })
 
   aboutToAppear(): void {
     this.initWords()
@@ -129,6 +148,11 @@ struct WordPage {
                 .aspectRatio(1)
                 .alignSelf(ItemAlign.Start)
                 .fillColor($r('app.color.common_gray_03'))
+                .onClick(() => {
+                  this.currentZh = item.zh
+                  this.currentEn = item.en
+                  this.wordController.open()
+                })
               Column({ space: 10 }) {
                 Text(item.en)
                   .fontWeight(FontWeight.Bold)
