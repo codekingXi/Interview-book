@@ -94,7 +94,7 @@ export struct QuestionListComp {
   }
 
   getQuestionListItem(): Promise<PageData<QuestionItemModel>> {
-    return httpClass.request({
+    return httpClass.request<PageData<QuestionItemModel>>({
       url: 'hm/question/list',
       params: {
         type: this.typeId,
