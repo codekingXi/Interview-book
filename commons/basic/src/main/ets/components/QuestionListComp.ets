@@ -29,7 +29,7 @@ export struct QuestionListComp {
   @Watch('onChangeSort')
   sort: SortType = SortType.Default
   @Prop
-  keyword:string
+  keyword: string
   @Prop
   typeId: number
   @State
@@ -102,7 +102,7 @@ export struct QuestionListComp {
         sort: this.sort,
         page: this.page,
         pageSize: 10,
-        keywords:this.keyword
+        keywords: this.keyword
       } as QuestionListParams
     })
   }
