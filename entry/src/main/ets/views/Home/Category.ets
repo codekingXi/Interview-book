@@ -22,7 +22,7 @@ export struct Category {
   /**
    * 导航列表数据*/
   @State
-  questionList: QuestionType[] | object[] = []
+  questionList: QuestionType[] = []
   @State
   showDialog: boolean = false
   tabController: TabsController = new TabsController()
