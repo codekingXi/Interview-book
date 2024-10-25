@@ -102,7 +102,7 @@ export struct QuestionListComp {
         sort: this.sort,
         page: this.page,
         pageSize: 10,
-        keywords: this.keyword
+        keyword: this.keyword
       } as QuestionListParams
     })
   }
