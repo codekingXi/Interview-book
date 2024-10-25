@@ -70,6 +70,10 @@ export struct SearchHistory {
                   // TODO 删除单个
                   history.delItemHistory(keyword) //删首选项
                   this.keywords = history.getAllHistory() //更新记录
+                  //取消删除状态
+                  if (!this.keywords.length) {
+                    this.isDeleting = false
+                  }
                 })
             }
           }
