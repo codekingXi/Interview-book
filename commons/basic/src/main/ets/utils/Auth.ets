@@ -43,7 +43,8 @@ class Auth {
           url: 'pages/LoginPage'
         })
       } else {
-        const params = opt.params as Record<string, string>
+        const params = opt.params as Record<string, string> || {}
+        //return_url自定义的
         params.return_url = opt.url
         router.pushUrl({
           url: 'pages/LoginPage',
