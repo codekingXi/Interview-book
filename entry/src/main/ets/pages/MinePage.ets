@@ -1,5 +1,6 @@
 import { router } from '@kit.ArkUI'
 import {
+  auth,
   ClocKIn,
   constants,
   formatTime,
@@ -176,7 +177,14 @@ export struct MinePage {
             })
           }
         })
-        this.toolsBuilder({ icon: $r('app.media.ic_mine_invite'), name: '推荐分享' })
+        this.toolsBuilder({
+          icon: $r('app.media.ic_mine_invite'), name: '面试录音', onClick: () => {
+            //登录前鉴权
+            auth.checkAuth({
+              url: 'pages/AudioPage'
+            })
+          }
+        })
         this.toolsBuilder({ icon: $r('app.media.ic_mine_file'), name: '意见反馈' })
         this.toolsBuilder({ icon: $r('app.media.ic_mine_info'), name: '关于我们' })
         this.toolsBuilder({
