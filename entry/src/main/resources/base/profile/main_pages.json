@@ -8,6 +8,7 @@
     "pages/SearchPage",
     "pages/ClockInPage",
     "pages/StudyTimePage",
-    "pages/WordPage"
+    "pages/WordPage",
+    "pages/AudioPage"
   ]
 }
