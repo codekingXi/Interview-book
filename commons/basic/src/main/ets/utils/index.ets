@@ -17,3 +17,5 @@ export * from './Tracking'
 export * from './History'
 
 export * from './Fn'
+
+export * from './AudioDB'
