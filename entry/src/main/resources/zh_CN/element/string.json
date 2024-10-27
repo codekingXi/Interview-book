@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "面试通"
+    },
+    {
+      "name": "reason_microphone",
+      "value": "用于面试录音"
     }
   ]
 }

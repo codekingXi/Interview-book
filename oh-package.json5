@@ -3,7 +3,8 @@
   "description": "Please describe the basic information.",
   "dependencies": {
     "@ohos/axios": "^2.2.4",
-    "@ohmos/calendar": "^2.1.3"
+    "@ohmos/calendar": "^2.1.3",
+    "@hview/dayjs": "^1.11.11"
   },
   "devDependencies": {
     "@ohos/hypium": "1.0.19",
