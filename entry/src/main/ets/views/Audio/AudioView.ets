@@ -8,6 +8,7 @@ export struct AudioView {
   @State list: InterviewAudioItem[] = []
 
   aboutToAppear(): void {
+    this.updateList()
     getContext().eventHub.on(constants.UPDATE_RECORD_LIST, () => {
       //更新列表
       this.updateList()
@@ -22,6 +23,7 @@ export struct AudioView {
   build() {
     Column() {
       NavBar({ title: '面试录音', showRightIcon: false })
+      //录音文件区
       Column() {
         List() {
           ForEach(this.list, (item: InterviewAudioItem) => {
@@ -38,6 +40,7 @@ export struct AudioView {
       .width('100%')
       .layoutWeight(1)
 
+      //录音区
       AudioRecordComp()
     }
     .width('100%')

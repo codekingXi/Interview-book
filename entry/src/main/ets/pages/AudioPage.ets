@@ -1,14 +1,14 @@
 import { abilityAccessCtrl } from '@kit.AbilityKit'
 import { promptAction, router } from '@kit.ArkUI'
-import { media } from '@kit.MediaKit'
-import { fileIo } from '@kit.CoreFileKit'
 import { AudioView } from '../views/Audio/AudioView'
+import { audioDB } from 'basic'
 
 @Entry
 @Component
 struct AudioPage {
-  aboutToAppear(): void {
+  async aboutToAppear() {
     this.checkMicroPhonePermission()
+    await audioDB.initStore()
   }
 
   /**

@@ -1,25 +1,24 @@
-import { media } from '@kit.MediaKit'
-import { fileIo } from '@kit.CoreFileKit'
 import { audioDB, auth, constants } from 'basic'
+import { fileIo } from '@kit.CoreFileKit'
+import { media } from '@kit.MediaKit'
 import dayjs from '@hview/dayjs'
 import { promptAction } from '@kit.ArkUI'
 
 @Component
 export struct AudioRecordComp {
-  async aboutToAppear() {
-    await audioDB.initStore()
-  }
-
-  @State
-  startTime: number = 0
   @StorageProp(constants.BOTTOM_AREA) bottomHeight: number = 0
-  avRecorder?: media.AVRecorder
-  fd?: number
-  filePath?: string
-  timer?: number
-  @State maxAmplitude: number = 0
   @State
   isRecording: boolean = false
+  @State
+  startTime: number = 0
+  //录音文件标识
+  fd?: number
+  //录音文件路径
+  filePath?: string
+  timer?: number
+  avRecorder?: media.AVRecorder
+  @State
+  maxAmplitude: number = 0
 
   /**
    * 异步开始录音
