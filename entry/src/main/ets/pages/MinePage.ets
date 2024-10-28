@@ -105,6 +105,11 @@ export struct MinePage {
                 .aspectRatio(1)
                 .fillColor($r('app.color.common_gray_01'))
             }
+            .onClick(()=>{
+              auth.checkAuth({
+                url:'pages/SettingPage'
+              })
+            })
           }
           .layoutWeight(1)
           .alignItems(HorizontalAlign.Start)
