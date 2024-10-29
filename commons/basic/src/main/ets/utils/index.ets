@@ -20,3 +20,5 @@ export * from './Fn'
 
 export * from './AudioDB'
 
+export * from './Theme'
+
