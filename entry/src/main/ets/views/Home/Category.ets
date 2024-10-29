@@ -6,11 +6,14 @@ import {
   SortType,
   Skeleton,
   SkeletonItem,
-  UserStoreKey
+  UserStoreKey,
+  constants
 } from "basic"
 
 @Component
 export struct Category {
+  @StorageProp(constants.IS_DARK)
+  isDark: boolean = false
   @State
   activeIndex: number = 0
   @State
@@ -250,7 +253,10 @@ export struct Category {
         .aspectRatio(1)
         .justifyContent(FlexAlign.Center)
         .margin({ right: -10 })
-        .linearGradient({ angle: 90, colors: [['#00ffffff', 0], ['#ffffffff', 0.285]] })
+        .linearGradient({
+          angle: 90,
+          colors: [[this.isDark ? '#00131313' : '#00ffffff', 0], [this.isDark ? '#131313' : '#ffffffff', 0.285]]
+        })
         .bindSheet($$this.showDialog, this.fillterDialog(), {
           showClose: false,
           height: 400
