@@ -1,5 +1,8 @@
-import { router } from '@kit.ArkUI';
-import { auth, NavBar, User } from 'basic';
+import { promptAction, router } from '@kit.ArkUI';
+import { auth, constants, NavBar, User } from 'basic';
+import { SettingsThemeDialog } from '../views/Setting/SettingsThemeDialog';
+import { bundleManager, ConfigurationConstant } from '@kit.AbilityKit';
+import { fileIo, storageStatistics } from '@kit.CoreFileKit';
 
 
 export interface Tool {
@@ -51,6 +54,58 @@ struct SettingsPage {
     })
   }
 
+  @StorageProp(constants.THEME_KEY)
+  colorMode: ConfigurationConstant.ColorMode = ConfigurationConstant.ColorMode.COLOR_MODE_LIGHT
+  dialog: CustomDialogController = new CustomDialogController({
+    builder: SettingsThemeDialog(),
+    alignment: DialogAlignment.Bottom,
+    customStyle: true
+  })
+  @State
+  cache: string = ''
+  @State
+  version: string = ''
+
+  calcCache() {
+    storageStatistics.getCurrentBundleStats()
+      .then(res => {
+        this.cache = (res.cacheSize / 1000 / 1000).toFixed(2) + 'MB'
+      })
+  }
+
+  aboutToAppear(): void {
+    this.gerVersion()
+  }
+
+  onPageShow(): void {
+    this.calcCache()
+  }
+
+  //清除缓存
+  clearCache() {
+    //沙箱的缓存
+    const cacheDirPath = getContext().cacheDir
+    const ctxContent = fileIo.accessSync(cacheDirPath)
+    if (ctxContent) {
+      fileIo.rmdirSync(cacheDirPath)
+    }
+    //应用的缓存
+    const appDirPath = getContext().getApplicationContext().cacheDir
+    const appCtxContent = fileIo.accessSync(cacheDirPath)
+    if (appCtxContent) {
+      fileIo.rmdirSync(appDirPath)
+    }
+    promptAction.showToast({ message: '清除完毕~' })
+    this.calcCache()
+  }
+
+  // 获取版本号
+  gerVersion() {
+    this.version =
+      'v' + bundleManager.getBundleInfoForSelfSync(bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION)
+        .versionName
+  }
+
   build() {
     Column() {
       NavBar({ title: '设置', showRightIcon: false, showBorder: true })
@@ -70,18 +125,20 @@ struct SettingsPage {
         this.toolsBuilder({ name: '消息推送', radius: 1 })
         this.toolsBuilder({
           name: '深色模式',
-          value: '已关闭',
+          value: this.colorMode === ConfigurationConstant.ColorMode.COLOR_MODE_LIGHT ? '已开启' : '已关闭',
           radius: 1,
           onClick: () => {
             // TODO 设置主题
+            this.dialog.open()
           }
         })
         this.toolsBuilder({
-          name: '清除应用缓存', value: '10MB', onClick: () => {
+          name: '清除应用缓存', value: this.cache, onClick: () => {
             // TODO 清除缓存
+            this.clearCache()
           }
         })
-        this.toolsBuilder({ name: '当前版本', value: '1.0.0', radius: 2 })
+        this.toolsBuilder({ name: '当前版本', value: this.version, radius: 2 })
         Blank()
           .height(15)
         Text('退出账号')
