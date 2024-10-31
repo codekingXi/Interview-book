@@ -28,11 +28,11 @@ struct ProfilePage {
   //修改头像
   async UpdateAvatar() {
     //1. 调起相册选择图片
-    const option = new photoAccessHelper.PhotoSelectOptions()
-    option.MIMEType = photoAccessHelper.PhotoViewMIMETypes.IMAGE_TYPE
-    option.maxSelectNumber = 1
     const picker = new photoAccessHelper.PhotoViewPicker()
-    const result = await picker.select(option)
+    const result = await picker.select({
+      MIMEType: photoAccessHelper.PhotoViewMIMETypes.IMAGE_TYPE,
+      maxSelectNumber: 1
+    })
     //图片路径
     const uri = result.photoUris[0]
     this.dialog.open()
