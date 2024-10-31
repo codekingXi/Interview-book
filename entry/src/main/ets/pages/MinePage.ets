@@ -88,6 +88,11 @@ export struct MinePage {
           .width(55)
           .aspectRatio(1)
           .borderRadius(55)
+          .onClick(() => {
+            auth.checkAuth({
+              url: 'pages/ProfilePage'
+            })
+          })
         // 是否登录
         if (this.User.token) {
           Column({ space: 4 }) {
@@ -105,9 +110,9 @@ export struct MinePage {
                 .aspectRatio(1)
                 .fillColor($r('app.color.common_gray_01'))
             }
-            .onClick(()=>{
+            .onClick(() => {
               auth.checkAuth({
-                url:'pages/SettingPage'
+                url: 'pages/SettingPage'
               })
             })
           }
