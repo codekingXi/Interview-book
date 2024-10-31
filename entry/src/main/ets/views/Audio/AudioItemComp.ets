@@ -1,9 +1,19 @@
 import { InterviewAudioItem } from "basic"
+import { AudioPlayer } from "./AudioPlayer"
 
 @Component
 export struct AudioItemComp {
   @Prop
   item: InterviewAudioItem = {} as InterviewAudioItem
+  @State
+  isShowDialog: boolean = false
+
+  @Builder
+  PlayerBuilder() {
+    Column() {
+      AudioPlayer({ currentItem: this.item, isShow: this.isShowDialog })
+    }
+  }
 
   build() {
     Row({ space: 15 }) {
@@ -31,5 +41,9 @@ export struct AudioItemComp {
     .padding(15)
     .height(80)
     .width('100%')
+    .bindContentCover($$this.isShowDialog, this.PlayerBuilder)
+    .onClick(() => {
+      this.isShowDialog = true
+    })
   }
 }
