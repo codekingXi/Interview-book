@@ -2,18 +2,6 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequ
 import { auth, logger, User } from "../../../../Index"
 import { promptAction, router } from "@kit.ArkUI"
 
-interface Res<T> {
-  //成功表示 true 成功 可选
-  success: boolean
-  //10000 正常 可选
-  code: number
-  //消息 可选
-  message: string
-  //响应结构 Object
-  data: T
-}
-
-
 //实例
 const instance = axios.create({
   baseURL: "https://api-harmony-teach.itheima.net/",
