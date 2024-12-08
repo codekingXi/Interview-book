@@ -222,28 +222,30 @@ export struct Category {
         })
 
         //右侧筛选按钮
-        Row() {
-          ImgComp({
-            imgSrc: $r('app.media.ic_home_filter'),
-            imgWidth: 24,
-            aspectRatioValue: 1
+        if (this.activeIndex <= this.questionList.length - 4) {
+          Row() {
+            ImgComp({
+              imgSrc: $r('app.media.ic_home_filter'),
+              imgWidth: 24,
+              aspectRatioValue: 1
+            })
+          }
+          .width(40)
+          .aspectRatio(1)
+          .justifyContent(FlexAlign.Center)
+          .margin({ top: 7, right: -10 })
+          .linearGradient({
+            angle: 90,
+            colors: [[this.isDark ? '#00131313' : '#00ffffff', 0], [this.isDark ? '#131313' : '#ffffffff', 0.285]]
+          })
+          .bindSheet($$this.showDialog, this.fillterDialog(), {
+            showClose: false,
+            height: 400
+          })
+          .onClick(() => {
+            this.showDialog = true
           })
         }
-        .width(40)
-        .aspectRatio(1)
-        .justifyContent(FlexAlign.Center)
-        .margin({ top: 7, right: -10 })
-        .linearGradient({
-          angle: 90,
-          colors: [[this.isDark ? '#00131313' : '#00ffffff', 0], [this.isDark ? '#131313' : '#ffffffff', 0.285]]
-        })
-        .bindSheet($$this.showDialog, this.fillterDialog(), {
-          showClose: false,
-          height: 400
-        })
-        .onClick(() => {
-          this.showDialog = true
-        })
       }
     }
   }
