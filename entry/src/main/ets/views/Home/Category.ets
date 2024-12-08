@@ -34,37 +34,6 @@ export struct Category {
   @State
   loading: boolean = false
 
-  //自定义tab结构
-  @Builder
-  tabBar(item: QuestionType, index: number) {
-    Row() {
-      Column({ space: 2 }) {
-        //文字
-        Text(item.name)
-          .height(40)
-          .fontSize(14)
-          .fontColor(this.activeIndex === index ? $r('app.color.black') : $r('app.color.common_gray_01'))
-        //下划线
-        Row()
-          .height(2)
-          .width(this.activeIndex === index ? 20 : 0)
-          .backgroundColor(this.activeIndex === index ? $r('app.color.black') : $r('app.color.common_gray_01'))
-          .animation({ duration: this.activeIndex === index ? 300 : 0 })
-      }
-
-      //如果类型=1 显示 右侧 new 图标
-      if (item.displayNewestFlag === 1) {
-        ImgComp({
-          imgSrc: $r('app.media.ic_home_new'),
-          imgWidth: 32,
-          imgHeight: 14,
-          marginLeft: 4
-        })
-      }
-    }.padding({ left: 8, right: 8 })
-    .margin({ right: item.name === '性能优化' ? 22 : 0 })
-  }
-
   async getQuestionList() {
     this.loading = true
     const res = await httpClass.request<QuestionType[]>({
@@ -231,10 +200,21 @@ export struct Category {
                 index: index
               })
                 .layoutWeight(1)
-            }.tabBar(this.tabBar(item, index))
+            }.tabBar(SubTabBarStyle.of(item.name)
+              .indicator({
+                color: Color.Red,
+                width: 40,
+                height: 5,
+                borderRadius: 6,
+                marginTop: 10
+              })
+              .labelStyle({
+                selectedColor: $r('app.color.black'),
+                unselectedColor: $r('app.color.common_gray_01')
+              })
+              .selectedMode(SelectedMode.INDICATOR))
           })
         }
-        .barHeight(44)
         .barMode(BarMode.Scrollable)
         .divider({ strokeWidth: .5, color: $r('app.color.common_gray_border') })
         .onChange((i: number) => {
@@ -252,7 +232,7 @@ export struct Category {
         .width(40)
         .aspectRatio(1)
         .justifyContent(FlexAlign.Center)
-        .margin({ right: -10 })
+        .margin({ top: 7, right: -10 })
         .linearGradient({
           angle: 90,
           colors: [[this.isDark ? '#00131313' : '#00ffffff', 0], [this.isDark ? '#131313' : '#ffffffff', 0.285]]
