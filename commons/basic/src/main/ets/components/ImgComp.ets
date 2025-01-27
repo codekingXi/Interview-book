@@ -8,9 +8,10 @@ import { imgType } from '../type'
  * */
 @Component
 export struct ImgComp {
-
+  @Require
   @Prop
   imgSrc: imgType = '' //图片地址
+  @Require
   @Prop
   imgWidth: Length = 0 //宽度
   @Prop
@@ -38,9 +39,10 @@ export struct ImgComp {
   @Prop
   aspectRatioValue: number = 0 //宽高比
   @Prop
-  marginLeft:number=0
+  marginLeft: number = 0
   @Prop
-  marginRight:number=0
+  marginRight: number = 0
+
   build() {
     Image(this.imgSrc)
       .draggable(this.isDraggable)
