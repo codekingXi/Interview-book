@@ -49,15 +49,15 @@ struct DateComp {
   build() {
     Column() {
       GridRow({ columns: 7, gutter: 6 }) {
-        //美化日期UI的结构 空圆点   因ide升级后出现数组长度无效的bug 旧代码先注释
-        ForEach(Array(6).fill(() => 1),
-          //Array(this.offsetDay === 0 ? 6 : this.offsetDay).fill(() => 1),
+        //美化日期UI的结构 空圆点
+        ForEach(//Array(6).fill(() => 1),
+          Array(this.offsetDay === 0 ? 6 : this.offsetDay).fill(() => 1),
           () => {
             GridCol()
           })
         //当前日期 实色圆点
-        ForEach(Array(30).fill(() => 1),
-          ///Array(this.day).fill(() => 1),
+        ForEach(//Array(30).fill(() => 1),
+          Array(this.day).fill(() => 1),
           (item: object, index: number) => {
             GridCol() {
               Row()
