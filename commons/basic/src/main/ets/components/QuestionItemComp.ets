@@ -18,9 +18,9 @@ export struct QuestionItemComp {
       }
 
       RowSplit() {
-        Text('点赞 8' + this.item.likeCount)
+        Text('点赞' + this.item.likeCount)
           .TextSty(true)
-        Text('浏览 123' + this.item.views)
+        Text('浏览' + this.item.views)
           .TextSty()
         if (this.item.readFlag === 1) {
           Text('已看过')
