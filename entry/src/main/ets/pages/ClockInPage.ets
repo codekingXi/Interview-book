@@ -1,5 +1,5 @@
 import { HmCalendar, HmCalendarSelectedDay } from '@ohmos/calendar'
-import { ClockInfo, ClockInfoParams, httpClass, NavBar } from 'basic'
+import { ClockInfo, ClockInfoParams, HttpClass, NavBar } from 'basic'
 
 interface DayBuilderParams {
   day: number
@@ -22,7 +22,7 @@ struct ClockInPage {
   selectedDays: HmCalendarSelectedDay[] = []
 
   async getClockInInfo(params: ClockInfoParams) {
-    const res = await httpClass.request<ClockInfo>({
+    const res = await HttpClass.request<ClockInfo>({
       url: 'hm/clockinInfo',
       params
     })

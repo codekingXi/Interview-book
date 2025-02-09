@@ -2,7 +2,7 @@ import {
   ImgComp,
   QuestionListComp,
   QuestionType,
-  httpClass,
+  HttpClass,
   SortType,
   Skeleton,
   SkeletonItem,
@@ -36,7 +36,7 @@ export struct Category {
 
   async getQuestionList() {
     this.loading = true
-    const res = await httpClass.request<QuestionType[]>({
+    const res = await HttpClass.request<QuestionType[]>({
       url: 'hm/question/type'
     })
     this.questionList = res

@@ -1,6 +1,6 @@
 import {
   constants,
-  httpClass,
+  HttpClass,
   LoadingDialogComp,
   NavBar,
   QuestionDetail,
@@ -103,7 +103,7 @@ struct QuestionPage {
   async getQuestionDetail(id: string) {
     this.dialogController.open()
     // 通过HTTP请求获取问题的详细信息
-    const result = await httpClass.request<QuestionDetail>({
+    const result = await HttpClass.request<QuestionDetail>({
       url: '/hm/question/' + id
     })
     this.dialogController.close()
@@ -120,7 +120,7 @@ struct QuestionPage {
       type: 0
     }
     //发请求
-    await httpClass.request<null, QuestionOptParams>({
+    await HttpClass.request<null, QuestionOptParams>({
       url: flag === 1 ? '/hm/question/opt' : '/hm/question/unOpt',
       method: 'post',
       data

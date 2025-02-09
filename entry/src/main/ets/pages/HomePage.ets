@@ -6,7 +6,7 @@ import {
   ClocKIn,
   constants,
   DataSource,
-  httpClass,
+  HttpClass,
   ImgComp,
   QuestionDetail,
   requestClockIn,
@@ -33,7 +33,7 @@ export struct HomePage {
     if (canIUse('SystemCapability.Multimedia.Scan.ScanBarcode')) {
       //唤起扫码界面
       const res = await scanBarcode.startScanForResult(getContext())
-      const item = await httpClass.request<QuestionDetail>({
+      const item = await HttpClass.request<QuestionDetail>({
         url: '/hm/question/' + res.originalValue
       })
       if (item) {

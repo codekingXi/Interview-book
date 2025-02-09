@@ -1,4 +1,4 @@
-import { calePercent, formatTime, httpClass, LoadingDialogComp, NavBar, StudyTimeData, StudyTimeItem } from 'basic'
+import { calePercent, formatTime, HttpClass, LoadingDialogComp, NavBar, StudyTimeData, StudyTimeItem } from 'basic'
 
 @Entry
 @Component
@@ -25,7 +25,7 @@ struct StudyTimePage {
 
   async getData() {
     this.dialog.open()
-    const res = await httpClass.request<StudyTimeData>({
+    const res = await HttpClass.request<StudyTimeData>({
       url: 'hm/studyInfo'
     })
     this.studyData = res

@@ -1,5 +1,5 @@
 import {
-  httpClass,
+  HttpClass,
   QuestionItemComp,
   PageData,
   QuestionItemModel,
@@ -94,7 +94,7 @@ export struct QuestionListComp {
   }
 
   getQuestionListItem(): Promise<PageData<QuestionItemModel>> {
-    return httpClass.request<PageData<QuestionItemModel>>({
+    return HttpClass.request<PageData<QuestionItemModel>>({
       url: 'hm/question/list',
       params: {
         type: this.typeId,

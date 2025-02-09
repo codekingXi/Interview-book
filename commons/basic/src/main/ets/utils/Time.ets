@@ -1,5 +1,5 @@
 import { promptAction, router } from "@kit.ArkUI"
-import { auth, httpClass } from "../../../../Index"
+import { auth, HttpClass } from "../../../../Index"
 
 const min = 60
 const hour = 60 * 60
@@ -29,7 +29,7 @@ export const requestClockIn = async () => {
     //登录了
     if (user.clockinNumbers === 0) {
       //没打卡 就打卡
-      const res = await httpClass.request<ClockRes>({
+      const res = await HttpClass.request<ClockRes>({
         url: 'hm/clockin',
         method: 'post'
       })

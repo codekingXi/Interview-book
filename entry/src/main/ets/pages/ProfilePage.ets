@@ -1,4 +1,4 @@
-import { auth, httpClass, LoadingDialogComp, NavBar, User, UserStoreKey } from 'basic'
+import { auth, HttpClass, LoadingDialogComp, NavBar, User, UserStoreKey } from 'basic'
 import { promptAction } from '@kit.ArkUI'
 import { photoAccessHelper } from '@kit.MediaLibraryKit'
 import { fileIo } from '@kit.CoreFileKit'
@@ -16,7 +16,7 @@ struct ProfilePage {
 
   //修改昵称
   async UpdateNickUser() {
-    await httpClass.request<null, User>({
+    await HttpClass.request<null, User>({
       url: 'hm/userInfo/profile',
       method: 'post',
       data: { nickName: this.user.nickName } as User
@@ -41,7 +41,7 @@ struct ProfilePage {
     fileIo.closeSync(file.fd)
     const formData = new FormData()
     formData.append('file', 'internal://cache/' + file.name)
-    await httpClass.request<string>({
+    await HttpClass.request<string>({
       url: 'hm/userInfo/avatar',
       method: 'post',
       data: formData,
@@ -51,7 +51,7 @@ struct ProfilePage {
       }
     })
     //更新头像
-    const user = await httpClass.request<User, User>({ url: 'hm/userInfo' })
+    const user = await HttpClass.request<User, User>({ url: 'hm/userInfo' })
     //当前展示的更新
     this.user.avatar = user.avatar
     //本地更新

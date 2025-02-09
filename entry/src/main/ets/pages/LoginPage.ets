@@ -1,4 +1,4 @@
-import { auth, constants, httpClass, LoginParam, NavBar, tracking, User, UserStoreKey } from 'basic'
+import { auth, constants, HttpClass, LoginParam, NavBar, tracking, User, UserStoreKey } from 'basic'
 import { promptAction, router } from '@kit.ArkUI'
 
 @Entry
@@ -29,7 +29,7 @@ struct LoginPage {
       return promptAction.showToast({ message: '请阅读并勾选用户协议' })
     }
     this.loading = true
-    const user = await httpClass.request<User, LoginParam>({
+    const user = await HttpClass.request<User, LoginParam>({
       url: 'hm/login',
       method: 'post',
       data: {

@@ -1,4 +1,4 @@
-import { constants, httpClass, logger } from '../../../../Index'
+import { constants, HttpClass, logger } from '../../../../Index'
 import { TimeItem } from '../models/TimeModel'
 import { preferences } from '@kit.ArkData'
 
@@ -64,7 +64,7 @@ class Tracking {
     // 当数据积累到 5 条或以上，或在强制上报模式下且数据不为空时，执行上报
     if (list.length >= 5 || (force && list.length)) {
       // 发起 HTTP 请求，将跟踪数据上报到服务器
-      httpClass.request<null>({
+      HttpClass.request<null>({
         url: 'hm/time/tracking',
         method: 'post',
         data: {

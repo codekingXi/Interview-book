@@ -47,10 +47,12 @@ instance.interceptors.response.use((res: AxiosResponse) => {
   return Promise.reject(e)
 })
 
-class HttpClass {
-  request<ResponseData, RequestData = Object>(config: AxiosRequestConfig<RequestData>) {
-    return instance<null, ResponseData, RequestData>(config)
+export class HttpClass {
+  /**
+   * 请求实例
+   * 泛型<响应类型数据,请求类型数据>*/
+  static request<Response, Request = Object>(config: AxiosRequestConfig<Request>) {
+    return instance<null, Response, Request>(config)
   }
 }
 
-export const httpClass = new HttpClass()
